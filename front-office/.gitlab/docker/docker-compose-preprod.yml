@@ -1,0 +1,9 @@
+version: '3'
+services:
+  angular-app-preprod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME}
+    ports:
+      - ${PORT}:80

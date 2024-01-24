@@ -1,0 +1,155 @@
+<div>
+  <!-- <div class=""> -->
+  <div class="flex items-center justify-between px-7 py-[8px]">
+    <div class="text-h6"></div>
+    <div>
+      <button
+        (click)="updateUserInfo()"
+        [disabled]="this.adresseForm.disabled"
+        class="rounded !bg-[#1976D2] border border-[#1976D2] hover:border-[#062d54] w-36 text-button">
+        <i class="fas fa-save"></i>
+        <!-- ENREGISTRER -->{{ 'panier.Enregistrer' | translate }}
+      </button>
+      <button
+        class="w-36 myBtn-edit"
+        [disabled]="!this.adresseForm.disabled"
+        (click)="handleEnablingForm()">
+        <i class="fas fa-edit"></i>
+        <!-- MODIFIER -->{{ 'panier.Modifier' | translate }}
+      </button>
+    </div>
+  </div>
+  <hr class="w-[93%] mx-auto" />
+  <form class="bg-white rounded px-8 pt-4 pb-8" [formGroup]="adresseForm">
+    <div class="pb-4">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label> <!-- Adresse 1  -->{{ 'panier.Address1' | translate }} </label>
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="{{ 'panier.Rue_voie_boîte_postale' | translate }}"
+            formControlName="adresse1"
+            id="adresse1"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(adresseForm.controls['adresse1'], 'adresse1')
+        }}</small>
+      </div>
+    </div>
+    <div class="pb-4">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label> <!-- Adresse 2 -->{{ 'panier.Address2' | translate }} </label>
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="{{ 'panier.Batiment_étage' | translate }}"
+            formControlName="adresse2"
+            id="adresse2"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(adresseForm.controls['adresse2'], 'adresse2')
+        }}</small>
+      </div>
+    </div>
+    <div class="pb-4">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label>
+          <!-- Code postale -->{{ 'panier.Code_postale' | translate }}
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            formControlName="codePostale"
+            id="codePostale"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(adresseForm.controls['codePostale'], 'codePostale')
+        }}</small>
+      </div>
+    </div>
+    <div class="pb-4">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label> <!-- Ville  -->{{ 'panier.Ville' | translate }} </label>
+        <div class="relative">
+          <input
+            type="text"
+            formControlName="ville"
+            id="ville"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(adresseForm.controls['ville'], 'ville')
+        }}</small>
+      </div>
+    </div>
+    <div class="pb-8">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label> <!-- Région  -->{{ 'panier.Région' | translate }} </label>
+        <div class="relative">
+          <input
+            type="text"
+            formControlName="region"
+            id="Région"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(adresseForm.controls['region'], 'region')
+        }}</small>
+      </div>
+    </div>
+    <div class="pb-8">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label> <!-- Pays  -->{{ 'panier.Pays' | translate }} </label>
+        <div class="relative">
+          <input
+            type="text"
+            placeholder=""
+            formControlName="pays"
+            id="pays"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(adresseForm.controls['pays'], 'pays')
+        }}</small>
+      </div>
+    </div>
+    <div class="pb-8">
+      <div class="flex flex-row justify-between items-end gap-10">
+        <label>
+          <!-- Autre information  -->
+          {{ 'panier.Autre_information' | translate }}
+        </label>
+        <div class="relative">
+          <textarea
+            formControlName="autreInformation"
+            id="autreInformation"
+            class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+      </div>
+      <div class="mt-1">
+        <small class="float-right">{{
+          getInputError(
+            adresseForm.controls['autreInformation'],
+            'autreInformation'
+          )
+        }}</small>
+      </div>
+    </div>
+  </form>
+  <!-- </div> -->
+</div>

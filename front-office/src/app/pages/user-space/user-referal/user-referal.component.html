@@ -1,0 +1,17 @@
+<div *ngIf="isFileul !== undefined">
+  <!-- FILLEUL -->
+  <div *ngIf="isFileul">
+    <app-fileul [isFileul]="isFileul"></app-fileul>
+    <button
+      class="cursor-pointer mt-5 bg-[#2196F3] py-2 rounded-md px-2"
+      (click)="isFileul = !isFileul">
+      <i class="fa-solid fa-list"></i>
+      {{ 'textlist' | translate }}
+      {{ isFileul ? 'Parrain' : 'Fileul' }}.
+    </button>
+  </div>
+  <!-- PARRAIN -->
+  <div *ngIf="!isFileul">
+    <app-parrain [children]="children"></app-parrain>
+  </div>
+</div>

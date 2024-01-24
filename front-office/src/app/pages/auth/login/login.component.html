@@ -1,0 +1,111 @@
+<div class="">
+  <div
+    class="w-full lg:w-[560px] mx-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl">
+    <div class="flex items-center px-8">
+      <div class="flex-grow h-0.5 !bg-[#ececec]"></div>
+      <div
+        class="mx-4 flex justify-center items-center h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-solid">
+        <img
+          src="/assets/img/logo-username.png"
+          class="w-12 h-12 sm:w-auto sm:h-auto" />
+      </div>
+      <div class="flex-grow h-0.5 !bg-[#ececec]"></div>
+    </div>
+    <div
+      class="mt-1 flex justify-center items-center p-2 !text-[red]"
+      *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <form class="bg-white rounded px-8 pt-5 pb-8" [formGroup]="loginForm">
+      <div class="mb-4">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <!-- User Icon -->
+            <i class="fa fa-user"></i>
+          </span>
+          <input
+            required
+            type="email"
+            placeholder="{{ 'user.nom_d_utilisateur_ou_email' | translate }}"
+            formControlName="email"
+            class="w-full pl-10 pr-4 py-2 rounded text-body1 border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+        <small>{{ getInputError(loginForm.controls['email'], 'email') }}</small>
+      </div>
+      <div class="mb-4">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <!-- Password Icon -->
+            <i class="fa fa-lock"></i>
+          </span>
+          <input
+            required
+            (keyup.enter)="onLogin()"
+            id="password"
+            type="password"
+            placeholder="{{ 'user.Mot_de_passe' | translate }}"
+            formControlName="password"
+            [(ngModel)]="password"
+            [type]="showPassword ? 'text' : 'password'"
+            class="w-full pl-10 pr-4 py-2 rounded border text-body1 border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          <span
+            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+            (click)="togglePasswordVisibility()">
+            <i *ngIf="showPassword" class="fa fa-eye cursor-pointer"></i>
+            <i *ngIf="!showPassword" class="fa fa-eye-slash cursor-pointer"></i>
+          </span>
+        </div>
+        <small>{{
+          getInputError(loginForm.controls['password'], 'password')
+        }}</small>
+      </div>
+      <div class="flex items-center justify-between w-full mb-8">
+        <button
+          (click)="onLogin()"
+          class="btn-sign bg-custom-color txt-btn font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          type="submit">
+          <!-- Se connecter -->{{ 'user.Se_connecter' | translate }}
+        </button>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-between mb-6">
+        <div class="flex items-center mb-2 sm:mb-0">
+          <input
+            id="rememberMe"
+            type="checkbox"
+            formControlName="rememberMe"
+            (change)="setRemember($event)"
+            class="form-checkbox h-3 w-3 bg-transparent sm:h-4 sm:w-4 mr-2" />
+          <label class="ml-2" for="rememberMe">
+            <!-- Se souvenir de moi -->{{
+              'user.Se_souvenir_de_moi' | translate
+            }}
+          </label>
+        </div>
+
+        <div class="text-sm">
+          <a routerLink="/auth/forgot" class="underline">
+            <!-- Mot de passe oublié -->{{
+              'user.Mot_de_passe_oublié' | translate
+            }}
+            ?</a
+          >
+        </div>
+      </div>
+      <div class="text-center mt-6 mb-6">
+        <div class="">
+          <a routerLink="/auth/register">
+            <!-- Vous n'avez pas de compte ? S'inscrire -->{{
+              'user.Vous_n_avez_pas_de_compte_?' | translate
+            }}<span class="underline">{{ 'user.s_inscrire' | translate }}</span>
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div>
+  <span class="flex flex-col justify-center items-center"></span>
+</div>
+<div class="">
+  <hr class="lg:w-[88%] md:w-[88%] mx-auto mt-7 w-80" />
+</div>

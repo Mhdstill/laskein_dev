@@ -1,0 +1,11 @@
+package.json
+package-lock.json
+yarn.lock
+build
+coverage
+e2e
+node_modules
+.vscode
+.angular
+dist
+.gitlab-ci.yml

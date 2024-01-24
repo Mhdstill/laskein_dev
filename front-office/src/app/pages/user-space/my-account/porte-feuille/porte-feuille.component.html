@@ -1,0 +1,109 @@
+<div class="p-1 !bg-[#2F435E]">
+  <div class="flex items-center justify-between px-5 py-[8px]">
+    <div class="text-h6">
+      <!-- Solde -->{{ 'wallet.Solde' | translate }} :
+      {{ user.wallet?.balance }} €
+    </div>
+  </div>
+  <hr class="w-[95%] mx-auto" />
+  <div class="px-5 py-8 justify-start items-start gap-4 flex">
+    <img src="/assets/svg/v-icon.svg" alt="v-icon" />
+    <div class="flex-col justify-start items-start gap-4 flex">
+      <span class="!text-body1 !text-white">
+        <!-- Déposer de l’argent sur mon compte -->{{
+          'wallet.Déposer_de_l_argent_sur_mon_compte' | translate
+        }}
+      </span>
+      <div class="flex gap-4 items-center">
+        <a href="#">
+          <img src="/assets/svg/bill/paypal.svg" alt="paypal" />
+        </a>
+        <a href="#">
+          <img src="/assets/svg/bill/visa.svg" alt="visa" />
+        </a>
+        <a href="#">
+          <img src="/assets/svg/bill/mastercard.svg" alt="mastercard" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/svg/bill/paysafecard.png"
+            alt="paysafecard"
+            class="w-[158px] h-[27px]" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/svg/bill/skrill.png"
+            class="w-[59px] h-[44px]"
+            alt="skrill" />
+        </a>
+      </div>
+
+      <div>
+        <app-paiement [isDeposit]="true"></app-paiement>
+      </div>
+    </div>
+  </div>
+  <div class="px-5 py-8 justify-start items-start gap-4 flex">
+    <img src="/assets/svg/v-icon.svg" alt="v-icon" />
+    <div class="flex-col justify-start items-start gap-4 flex">
+      <span class="!text-body1 !text-white">
+        <!-- Rétirer de l’argent -->{{
+          'wallet.Retirer_de_l_argent' | translate
+        }}
+      </span>
+      <div class="flex gap-4 items-center">
+        <a href="#">
+          <img src="/assets/svg/bill/paypal.svg" alt="paypal" />
+        </a>
+        <a href="#">
+          <img src="/assets/svg/bill/visa.svg" alt="visa" />
+        </a>
+        <a href="#">
+          <img src="/assets/svg/bill/mastercard.svg" alt="mastercard" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/svg/bill/paysafecard.png"
+            alt="paysafecard"
+            class="w-[158px] h-[27px]" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/svg/bill/skrill.png"
+            class="w-[59px] h-[44px]"
+            alt="skrill" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/img/bitcoin.png"
+            class="w-[47px] h-[31px] pl-4"
+            alt="bitcoin" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/img/litecoin.png"
+            class="w-[47px] h-[31px] pl-3"
+            alt="litecoin" />
+        </a>
+        <a href="#">
+          <img
+            src="/assets/img/xrp.png"
+            class="w-[42px] h-[27px] pl-3"
+            alt="xrp" />
+        </a>
+      </div>
+      <app-paiement [isDeposit]="false"></app-paiement>
+    </div>
+  </div>
+</div>
+<div class="!bg-[#44566C] py-3">
+  <!-- Historique des abonnements -->{{
+    'wallet.Historique_des_transactions' | translate
+  }}
+</div>
+<app-custom-table-panier
+  [columns]="tableColumns"
+  [rows]="tableRows"></app-custom-table-panier>
+<!-- <app-custom-table-panier
+  [columns]="tableColumns.map(column => TRANSLATIONS[column])"
+  [rows]="tableRows"></app-custom-table-panier> -->

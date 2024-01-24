@@ -1,0 +1,88 @@
+<div class="p-5 !bg-[#2F435E] !h-[300px]">
+  <div class="mb-5">
+    {{ 'abonnement.Abonnement_actuelle' | translate }}
+  </div>
+  <div class="flex">
+    <form [formGroup]="abonnementForm" class="flex">
+      <div class="mr-10">
+        <div class="p-3">
+          {{ 'Date_de_début' | translate }}
+        </div>
+        <div class="p-3">
+          {{ 'Date_de_fin' | translate }}
+        </div>
+        <div class="p-3">
+          {{ 'abonnement.Offre' | translate }}
+        </div>
+        <div class="p-3">
+          {{ 'abonnement.Jours_restants' | translate }}
+        </div>
+      </div>
+      <div>
+        <div class="p-2">
+          <input value="10/10/2022" formControlName="startDate" />
+        </div>
+        <div class="p-2">
+          <input value="10/11/2022" formControlName="endDate" />
+        </div>
+        <div class="p-2">
+          <input value="Basique" formControlName="offer" />
+        </div>
+        <div class="p-2">
+          <input value="12 jours" formControlName="daysLeft" />
+        </div>
+      </div>
+    </form>
+    <div class="ml-auto flex flex-col">
+      <div class="mb-5">
+        <button
+          class="!bg-[#1976D2] p-3 mr-5 rounded-[5px] !w-[150px]"
+          (click)="editSubscription()">
+          <i class="fa fa-pencil mr-2" aria-hidden="true"></i>
+
+          {{ 'abonnement.Modifier' | translate }}
+        </button>
+        <!-- <button class="!bg-[#FBA048] p-3 rounded-[5px] !w-[150px]">
+          <i class="fa fa-times mr-2" aria-hidden="true"></i>
+          Annuler
+        </button> -->
+      </div>
+      <div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            value=""
+            class="sr-only peer"
+            (change)="modifOfferRenewal()"
+            [(ngModel)]="isRenew" />
+          <div
+            class="w-11 !bg-[#44566c] h-[15px] rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:!bg-[#a6a7a7]"></div>
+          <span
+            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+            {{ 'abonnement.Renouvellement_automatique' | translate }}
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mb-2 mt-5">
+  {{ 'abonnement.Historique_des_abonnements' | translate }}
+</div>
+<app-custom-table-panier
+  [columns]="tableColumns"
+  [rows]="tableRows"></app-custom-table-panier>
+
+<div class="modal-overlay" *ngIf="this.abonnementForm.enabled"></div>
+<div class="relative modal-container" *ngIf="this.abonnementForm.enabled">
+  <button (click)="editSubscription()" class="btn-close">&times;</button>
+  <div
+    class="!bg-[red] custom-modal"
+    [ngClass]="this.abonnementForm.enabled ? 'animate-slide-in' : ''">
+    <app-subscription
+      [showBestSelling]="false"
+      [subscriptionUpdate]="true"
+      (sendSelectedOffer)="overwriteSelectedOffer($event)"></app-subscription>
+  </div>
+</div>

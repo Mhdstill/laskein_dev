@@ -1,0 +1,205 @@
+<div class="container-login">
+  <div
+    class="w-full lg:w-[560px] mx-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl">
+    <div class="flex items-center px-8 mt-10">
+      <div class="flex-grow h-0.5 bg-custom-color"></div>
+      <div
+        class="mx-4 flex justify-center items-center h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-solid">
+        <img
+          src="/assets/img/register.png"
+          class="w-12 h-12 sm:w-auto sm:h-auto" />
+      </div>
+      <div class="flex-grow h-0.5 bg-custom-color"></div>
+    </div>
+    <form class="bg-white rounded px-8 pt-6 pb-8" [formGroup]="registerForm">
+      <div class="flex flex-col sm:flex-row">
+        <div class="relative mb-4 sm:mr-2">
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <i class="fa fa-user"></i>
+            </span>
+            <input
+              type="text"
+              placeholder="{{ 'user.Nom' | translate }}"
+              formControlName="name"
+              class="w-full pl-10 pr-4 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+          <small>{{
+            getInputError(registerForm.controls['name'], 'name')
+          }}</small>
+        </div>
+        <div class="relative mb-4">
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <i class="fa fa-user"></i>
+            </span>
+            <input
+              type="text"
+              placeholder="{{ 'user.Prénom' | translate }}"
+              formControlName="surname"
+              class="w-full pl-10 pr-4 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+          <small>{{
+            getInputError(registerForm.controls['surname'], 'surname')
+          }}</small>
+        </div>
+      </div>
+      <div class="mb-4">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <i class="fa fa-user"></i>
+          </span>
+          <input
+            type="text"
+            placeholder="{{ 'user.Nom_utilisateur' | translate }}"
+            formControlName="username"
+            class="w-full pl-10 pr-4 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+        <small>{{
+          getInputError(registerForm.controls['username'], 'username')
+        }}</small>
+      </div>
+      <div class="mb-4">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <i class="fa fa-envelope"></i>
+          </span>
+          <input
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+            class="w-full pl-10 pr-4 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+        <small>{{
+          getInputError(registerForm.controls['email'], 'email')
+        }}</small>
+      </div>
+      <div class="mb-4">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <i class="fa fa-lock"></i>
+          </span>
+          <input
+            id="password"
+            type="password"
+            placeholder="{{ 'user.Mot_de_passe' | translate }}"
+            formControlName="password"
+            [(ngModel)]="password"
+            [type]="showPassword ? 'text' : 'password'"
+            class="w-full pl-10 pr-4 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          <span
+            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+            (click)="togglePasswordVisibility()">
+            <i *ngIf="showPassword" class="fa fa-eye cursor-pointer"></i>
+            <i *ngIf="!showPassword" class="fa fa-eye-slash cursor-pointer"></i>
+          </span>
+        </div>
+        <small *ngFor="let error of getPasswordValidationErrors()">
+          {{ error }}
+          <br />
+        </small>
+      </div>
+      <div class="mb-10">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <i class="fa fa-lock"></i>
+          </span>
+          <input
+            (keyup.enter)="onRegister()"
+            id="passwordConfirm"
+            type="password"
+            placeholder="{{ 'user.Confirmation_mot_de_passe' | translate }}"
+            formControlName="passwordConfirm"
+            [(ngModel)]="passwordConfirm"
+            [type]="showPasswordConfirm ? 'text' : 'password'"
+            class="w-full pl-10 pr-4 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          <span
+            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+            (click)="togglePasswordConfirmVisibility()">
+            <i *ngIf="showPasswordConfirm" class="fa fa-eye cursor-pointer"></i>
+            <i
+              *ngIf="!showPasswordConfirm"
+              class="fa fa-eye-slash cursor-pointer"></i>
+          </span>
+        </div>
+        <small>{{ passwordMatch() }}</small>
+      </div>
+      <div class="flex-col text-center mb-6">
+        <div class="mb-5">
+          <div class="relative">
+            <div
+              (click)="showModal = true"
+              class="underline font-semibold cursor-pointer">
+              {{ 'user.J_ai_lu_et_j_accepte' | translate }}{{ ' ' }}
+              {{
+                'user.les_termes_de_la_politique_de_confidentialité' | translate
+              }}
+            </div>
+            <div
+              *ngIf="showModal"
+              class="flex flex-col w-1/3 ml-auto mr-auto modal-bg justify-center items-center">
+              <div
+                class="py-12 modal__overlay dark:bg-gray-900 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                id="modal">
+                <div
+                  role="modal"
+                  class="mx-auto container flex justify-center w-full md:w-2/3 max-w-lg pt-[180px]">
+                  <div
+                    class="!bg-[#2d486e] rounded-xl shadow fixed overflow-y-auto sm:h-auto w-10/12 md:w-8/12 lg:w-2/5 2xl:w-2/5">
+                    <div
+                      class="!bg-[#2d486e] rounded-tl-md rounded-tr-md px-4 md:px-8 md:py-4 pt-3 flex items-center justify-center">
+                      <p class="text-h6 text-center">
+                        Le contenu de ce module est en cours.
+                      </p>
+                    </div>
+                    <div class="px-4 md:px-10 md:pt-12 md:pb-4 pb-7">
+                      <div
+                        [formGroup]="registerForm"
+                        class="flex items-center justify-between">
+                        <div></div>
+                        <div class="custom-Modal-input">
+                          <button
+                            (click)="fileInput.click()"
+                            class="text-h6 font-semibold focus:outline-none ml-3 !bg-[#54B164] dark:bg-gray-700 dark:border-gray-700 dark:hover:bg-gray-600 transition duration-150 text-gray-600 dark:text-gray-400 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
+                            {{ 'detail.Accepter' | translate }}
+                          </button>
+                          <input
+                            (change)="showModal = false"
+                            type="checkbox"
+                            id="rememberMe"
+                            formControlName="acceptAndReadTerms"
+                            #fileInput />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <small>{{
+            getInputError(
+              registerForm.controls['acceptAndReadTerms'],
+              'acceptAndReadTerms'
+            )
+          }}</small>
+        </div>
+      </div>
+      <div class="flex items-center justify-between w-full mb-8">
+        <button
+          (click)="onRegister()"
+          class="btn-sign text-button bg-custom-color txt-btn font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          type="button">
+          {{ 'user.s_inscrire' | translate }}
+        </button>
+      </div>
+      <div class="text-center">
+        <a routerLink="/auth">
+          {{ 'user.Vous_avez_déjà_un_compte_?' | translate
+          }}<span class="underline">{{ 'user.Se_connecter' | translate }}</span>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="lg:w-[88%] md:w-[88%] mx-auto mt-7 w-80" />

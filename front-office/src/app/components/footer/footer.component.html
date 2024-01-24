@@ -1,0 +1,124 @@
+<footer class="flex justify-center text-center py-8 w-full">
+  <div class="flex flex-col items-center max-w-screen-xl px-14 w-full">
+    <div class="flex flex-col justify-center items-center gap-4">
+      <h1 class="text-h5 !text-white">
+        <!-- Reseaux sociaux -->{{
+          'accueil.footer.reseaux_sociaux' | translate
+        }}
+      </h1>
+      <div class="flex gap-8">
+        <a>
+          <img
+            src="/assets/svg/social-media/Facebook.svg"
+            class="w-8 h-8"
+            alt="Facebook" />
+        </a>
+        <a>
+          <img
+            src="/assets/svg/social-media/Instagram.svg"
+            class="w-8 h-8"
+            alt="Instagram" />
+        </a>
+        <a>
+          <img
+            src="/assets/svg/social-media/Pinterest.svg"
+            class="w-8 h-8"
+            alt="Pinterest" />
+        </a>
+        <a>
+          <img src="/assets/svg/snapchat.svg" class="w-8 h-8" alt="snapchat" />
+        </a>
+        <a>
+          <img src="/assets/svg/tiktok.svg" class="w-8 h-8" alt="tiktok" />
+        </a>
+        <a>
+          <img
+            src="/assets/svg/twitter.png"
+            class="w-8 h-8 flex justify-center items-center"
+            alt="Twitter" />
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="p-5 flex xl:flex-row lg:flex-row md:flex-col sm:flex-col text-left justify-center w-full lh-1-5 gap-4">
+      <div class="flex flex-col xl:w-1/3 lg:w-1/3 md:w-full gap-3 sm:w-full">
+        <a href="contact" class="!text-body1 !text-white">{{
+          'accueil.footer.contact' | translate
+        }}</a>
+        <a href="faq" class="!text-body1 !text-white">{{
+          'accueil.footer.FAQ' | translate
+        }}</a>
+        <a href="blog" class="!text-body1 !text-white">{{
+          'accueil.footer.Blog' | translate
+        }}</a>
+        <a href="about" class="!text-body1 !text-white">{{
+          'accueil.footer.a_propos' | translate
+        }}</a>
+      </div>
+
+      <div class="flex flex-col xl:w-1/3 lg:w-1/3 md:w-full gap-3 sm:w-full">
+        <a href="mention-legale" class="!text-body1 !text-white">{{
+          'accueil.footer.mention_legale' | translate
+        }}</a>
+        <a href="rgpd" class="!text-body1 !text-white">{{
+          'accueil.footer.RGPD' | translate
+        }}</a>
+        <a href="cgv" class="!text-body1 !text-white">{{
+          'accueil.footer.CGV' | translate
+        }}</a>
+        <a href="regle-du-jeux" class="!text-body1 !text-white">{{
+          'accueil.footer.reglement_de_jeux' | translate
+        }}</a>
+      </div>
+
+      <div class="flex flex-col xl:w-1/3 lg:w-1/3 md:w-full sm:w-full gap-1">
+        <div>
+          <span class="!text-body1 !text-white">{{
+            'accueil.footer.paiement_sécurisé' | translate
+          }}</span>
+          <div class="flex gap-4 items-center">
+            <a href="#">
+              <img src="/assets/svg/bill/paypal.svg" alt="paypal" />
+            </a>
+            <a href="#">
+              <img src="/assets/svg/bill/mastercard.svg" alt="mastercard" />
+            </a>
+            <a href="#">
+              <img src="/assets/svg/bill/visa.svg" alt="visa" />
+            </a>
+            <a href="#">
+              <img
+                src="/assets/svg/bill/skrill.png"
+                class="w-[59px] h-[44px]"
+                alt="skrill" />
+            </a>
+            <a href="#">
+              <img
+                src="/assets/svg/bill/paysafecard.png"
+                alt="paysafecard"
+                class="w-[158px] h-[27px]" />
+            </a>
+            <span class="text-h6">+215methods</span>
+          </div>
+        </div>
+        <div class="flex justify-between w-full">
+          <div>
+            <span class="!text-body1 !text-white">Trustpilot</span>
+            <a href="#">
+              <img src="/assets/svg/stars.svg" alt="stars" />
+            </a>
+          </div>
+          <img src="/assets/svg/majeur.svg" alt="majeur" />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex w-full justify-between py-7 px-4">
+      <span class="!text-body1 !text-white"> Powered by object-if </span>
+      <span class="!text-body1 !text-white">
+        Copyright 2023 - v{{ getAppVersion() }}</span
+      >
+    </div>
+  </div>
+</footer>

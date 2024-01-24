@@ -1,0 +1,16 @@
+<div class="flex flex-col p-8 overflow-auto !bg-[#416678] h-full gap-6">
+  <h3 class="text-center uppercase">
+    {{ 'accueil.menu.plus_vendus' | translate }}
+  </h3>
+  <div class="md:flex flex-col gap-4">
+    <div
+      class="flex justify-center"
+      *ngFor="let cardBoxItem of listBestSelledBox">
+      <a [routerLink]="['/detail-box/', cardBoxItem.id]">
+        <app-card-box
+          (click)="refreshPage()"
+          [cardBoxItem]="cardBoxItem"></app-card-box>
+      </a>
+    </div>
+  </div>
+</div>

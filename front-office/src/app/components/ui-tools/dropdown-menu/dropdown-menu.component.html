@@ -1,0 +1,64 @@
+<div
+  class="flex items-center justify-center"
+  [ngClass]="{ disabled: disabled }">
+  <div class="relative inline-block text-left dropdown">
+    <span class="rounded-md shadow-sm">
+      <button
+        [ngClass]="getBtnClass()"
+        [style]="getCssButton()"
+        class="border-radius-20 w-[190px] !bg-[transparent]"
+        type="button"
+        aria-haspopup="true"
+        aria-expanded="true"
+        aria-controls="headlessui-menu-items-117"
+        (click)="showDropDown()">
+        <i [class]="dropDownTitleValue.icon" class="mr-2"></i>
+        <span class="fts-15 !text-white">
+          {{ dropDownTitleValue.text | translate | slice : 0 : 9 }}
+        </span>
+        <svg class="w-5 h-5 ml-auto mr-1" viewBox="0 0 20 20" fill="white">
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </span>
+    <div
+      *ngIf="displayDropdown"
+      class="z-50 absolute opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
+      <div
+        class="right-0 w-56 mt-2 origin-top-right my-bg-white border border-[#394b62] !rounded-[8px] divide-y divide-gray-100 shadow-lg outline-none"
+        aria-labelledby="headlessui-menu-button-1"
+        id="headlessui-menu-items-117"
+        role="menu">
+        <div class="!bg-[#2F435E] p-2" *ngIf="selectTitle">
+          {{ selectTitle | translate }}
+        </div>
+        <div class="py-1 !bg-[#2F435E]" *ngIf="dropDownLink">
+          <span *ngFor="let item of dropdownList">
+            <a
+              [routerLink]="item.url"
+              tabindex="0"
+              class="hover:!bg-[#47576b] !text-white !font-normal flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+              role="menuitem"
+              (click)="optionClicked(item)">
+              {{ item.text | translate }}
+            </a>
+          </span>
+        </div>
+        <div class="py-1 !bg-[#2F435E]" *ngIf="!dropDownLink">
+          <span *ngFor="let item of dropdownList" class="cursor-pointer">
+            <span
+              tabindex="0"
+              class="hover:!bg-[#47576b] !text-white !font-normal flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+              role="menuitem"
+              (click)="optionClicked(item)">
+              {{ item.text | translate }}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

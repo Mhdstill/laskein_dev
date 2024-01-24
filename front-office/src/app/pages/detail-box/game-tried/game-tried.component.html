@@ -1,0 +1,93 @@
+<div class="flex w-full justify-center max-w-screen-xl mx-auto h-full pt-16">
+  <div
+    class="w-4/5 min-h-[900px] py-2 bg-slate-600 flex-col justify-start gap-2 flex">
+    <div *ngIf="boxDetails">
+      <div class="flex justify-between py-6">
+        <div class="flex-col pl-3 space-y-6 gap-6">
+          <img
+            (click)="goBack()"
+            src="/assets/svg/west.svg"
+            class="w-[70px] h-[30px] cursor-pointer" />
+          <button
+            *ngIf="afficherBoutonJouer && show"
+            (click)="startAnimationButtonClicked()"
+            class="h-[36px] px-4 !bg-[#54B164] rounded-[50px] text-center text-button !text-white font-medium uppercase leading-9 tracking-widest">
+            <i class="fa-solid fa-gamepad"></i>{{ '' }}
+            {{ 'panier.Jouer' | translate }}
+          </button>
+          <button
+            (click)="startAnimationButtonClicked()"
+            *ngIf="afficherBoutonRejouer && show"
+            class="h-[36px] px-4 !bg-[#54B164] rounded-[50px] text-center text-button !text-white font-medium uppercase leading-9 tracking-widest">
+            <i class="fa-solid fa-arrow-rotate-right"></i>{{ '' }}
+            {{ 'panier.rejouer' | translate }}
+          </button>
+        </div>
+        <div class="grow flex-col justify-start items-center gap-[10px] flex">
+          <div class="col-span-1 my-wid" *ngIf="cardBoxItem">
+            <div class="flex flex-col">
+              <div
+                class="text-[12px] normal-case leading-5 tracking-[0.4px] !text-white !w-full px-1 bg-[#33B063]">
+                {{ cardBoxItem.topTitle }}
+              </div>
+              <div
+                class="flex flex-col px-2 p-1 gap-1 rounded-[8px] w-[209px] !bg-gradient-to-b from-[#2f435e] from-[41.21%] via-[#4b5e65] via-[83.79%] to-[#201b22] to-[100%]">
+                <h4
+                  class="text-center uppercase font-bold flex justify-center tracking-[2px] leading-4 pt-2">
+                  {{ cardBoxItem.title }}
+                </h4>
+                <p class="text-caption text-center normal-case">
+                  {{ cardBoxItem.subTitle }}
+                </p>
+                <div class="flex justify-center rounded">
+                  <img
+                    *ngIf="afficherBoutonJouer && show"
+                    [src]="getBoxImageURL(cardBoxItem.imageUrl ?? '')"
+                    class="w-[183px] h-[153px] rounded" />
+                  <img
+                    *ngIf="!afficherBoutonJouer"
+                    [src]="getBoxImageURL(selectedArticleImageUrl)"
+                    class="w-[183px] h-[153px] rounded" />
+                </div>
+                <div
+                  class="w-full flex justify-between flex-shrink-0 items-center px-2">
+                  <div
+                    class="text-caption text-white flex px-1 rounded-full !bg-[#D2339B] items-center h-5">
+                    {{ cardBoxItem.textLeft }}
+                  </div>
+                  <div class="text-h5 text-white">
+                    {{ cardBoxItem.textRight }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+      <hr class="mx-auto w-[98%] pb-6" />
+      <div
+        class="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-8 xl:grid-cols-8 gap-x-12 px-6"
+        [ngStyle]="getGridLayoutStyle(boxArticle.length)"
+        id="style-4">
+        <div
+          [id]="cardGameItem.id"
+          *ngFor="let cardGameItem of getFormattedGameItems(); let i = index">
+          <app-carde-game-tride
+            [addBorder]="selectedArticleId === cardGameItem.id"
+            class="flex justify-center"
+            [cardGameItem]="cardGameItem"></app-carde-game-tride>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-auto w-1/5 max-h-[1040px] pl-1" id="style-4">
+    <a routerLink="detail-box">
+      <app-best-sellers
+        class=""
+        [boxList]="getBoxListRigt()"
+        [cardBoxItem]="cardBoxItem">
+      </app-best-sellers>
+    </a>
+  </div>
+</div>

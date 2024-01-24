@@ -1,0 +1,113 @@
+<div
+  class="relative !bg-[#2F435E] overflow-x-auto shadow-md sm:rounded-lg"
+  *ngIf="rowsValue && columns">
+  <div class="table-content">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th
+            scope="col"
+            class="px-6 py-3"
+            *ngFor="let column of columns"
+            [style.width]="columnWidth">
+            <div class="flex items-center">
+              <a class="mr-5 cursor-pointer">
+                <svg
+                  width="14"
+                  height="13"
+                  viewBox="0 0 14 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0.988281 6.31L7 0.298279L13.0117 6.31L11.9219 7.36469L7.73828 3.18109V12.3217H6.26172V3.18109L2.04297 7.36469L0.988281 6.31Z"
+                    fill="#ECECEC" />
+                </svg>
+              </a>
+              {{ column }}
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+          *ngFor="let row of displayedRows">
+          <th
+            [style.width]="columnWidth"
+            *ngFor="let column of columns; index as i"
+            scope="ra"
+            [ngClass]="getCssClassForColumn(i)">
+            <button
+              *ngIf="row[column]['categorie'] === 'BUTTON'"
+              [style]="row[column]['style']"
+              [ngClass]="row[column]['class'] ?? ''"
+              (click)="emitButton1(row)">
+              {{ row[column]['displayValue'] }}
+            </button>
+            <a
+              *ngIf="row[column]['categorie'] === 'LINK'"
+              [style]="row[column]['style']"
+              [ngClass]="row[column]['class'] ?? ''"
+              >{{ row[column]['displayValue'] }}</a
+            >
+            <img
+              *ngIf="row[column]['categorie'] === 'IMAGE'"
+              [src]="row[column]['displayValue']"
+              [ngClass]="row[column]['class'] ?? ''"
+              [style]="row[column]['style']" />
+            <span
+              *ngIf="row[column]['categorie'] === 'TEXT'"
+              [ngClass]="row[column]['class'] ?? ''"
+              [style]="row[column]['style']"
+              >{{ row[column]['displayValue'] }}</span
+            >
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex p-2 justify-center items-center">
+    <div class="flex w-11/12 text-right pr-8">
+      <span class="ml-auto">{{ currentPage }} of {{ totalPages }}</span>
+    </div>
+    <div class="w-1/12">
+      <div class="float-right flex justify-center items-center">
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage === 1"
+          class="!bg-[transparent] w-1/2 mr-2">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="mr-10 cursor-pointer">
+            <path
+              d="M19.4219 11.4062L14.8281 16L19.4219 20.5938L18.0156 22L12.0156 16L18.0156 10L19.4219 11.4062Z"
+              fill="#ECECEC" />
+          </svg>
+        </button>
+
+        <button
+          class="!bg-[transparent]"
+          class="w-1/2"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages">
+          <svg
+            width="8"
+            height="12"
+            viewBox="0 0 8 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="cursor-pointer">
+            <path
+              d="M1.98438 0L7.98438 6L1.98438 12L0.578125 10.5938L5.17188 6L0.578125 1.40625L1.98438 0Z"
+              fill="white" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

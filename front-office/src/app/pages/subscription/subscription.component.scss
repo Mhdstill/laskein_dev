@@ -1,0 +1,108 @@
+.subscription-card-body {
+  background-color: #2f435e !important;
+
+  h1 {
+    font-size: 1.3em;
+  }
+}
+
+.subscription-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 1em 1em 1em;
+  width: 242px;
+  height: fit-content;
+  background: #2f435e !important;
+  border: 2px solid #ececec;
+  border-radius: 16px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  .subscription-card-header {
+    /* Frame 306 */
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    width: 242px;
+    height: 72px;
+
+    border-width: 2px 2px 0px 2px;
+    border-style: solid;
+    border-color: #ececec;
+    border-radius: 16px 16px 0px 0px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
+}
+
+.btn-subscription {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 16px;
+  gap: 16px;
+  width: 100px;
+  height: 36px;
+
+  /* Palette/dak-dor */
+  border-radius: 50px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.recette-title {
+  font-size: 1.5em;
+  color: white !important;
+}
+
+.recette-title div:first-child {
+  font-size: 1.2em;
+}
+
+.right-side {
+  background-color: #44566c !important;
+}
+
+.subcription-management-view {
+  width: 100% !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: fit-content;
+  width: 100% !important;
+  position: fixed;
+  top: 0;
+}
+
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}

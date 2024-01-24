@@ -1,0 +1,149 @@
+# Stages définis pour les différentes étapes du pipeline CI/CD
+stages:
+  - build
+  - deploy
+
+build-job: # Cette tâche s'exécute dans l'étape de build, qui s'exécute en premier.
+  stage: build
+  image: node:16
+  script:
+    - yarn install # Installe les dépendances de l'application
+    - yarn build # Effectue le build de l'application NestJS
+  artifacts:
+    paths:
+      - dist/ # Déclare le dossier 'dist' comme artefact pour être utilisé dans le job de déploiement
+  only:
+    - develop
+    - staging
+    - preprod
+  tags:
+    - develop
+
+# release-job:
+#   stage: release
+#   image: node:16
+#   script:
+#     - yarn install
+#     - git config --global user.email $CI_EMAIL
+#     - git config --global user.name $CI_NAME
+#     - git fetch --prune
+#     - git checkout preprod
+#     #- git pull https://${CI_USER}:${CI_ACCESS_TOKEN}@${REPO_URL_BACKEND} preprod
+#     - >
+#       if [[ $(git log -1 --pretty=%B) =~ "BREAKING CHANGE" ]]; then
+#         yarn release:major
+#       elif [[ $(git log -1 --pretty=%B) =~ ^feat ]]; then
+#         yarn release:minor
+#       elif [[ $(git log -1 --pretty=%B) =~ ^fix ]]; then
+#         yarn release:patch
+#       else
+#         yarn release:patch
+#       fi
+#     - git push https://${CI_USER}:${CI_ACCESS_TOKEN}@${REPO_URL_BACKEND} preprod
+#     - git checkout staging
+#     - git merge origin/preprod
+#     - git push https://${CI_USER}:${CI_ACCESS_TOKEN}@${REPO_URL_BACKEND} staging
+#     - git checkout develop
+#     - git merge origin/preprod
+#     - git push https://${CI_USER}:${CI_ACCESS_TOKEN}@${REPO_URL_BACKEND} develop
+#   only:
+#     - preprod
+#   tags:
+#     - develop
+#   except:
+#     variables:
+#       - $CI_COMMIT_MESSAGE =~ /ci skip|skip ci|skip pipeline/i
+
+# production-deploy-job:
+#   stage: deploy
+#   image: ubuntu:latest
+#   script:
+#     - apt-get update && apt-get install -y ssh rsync
+#     - mkdir -p /opt/projetobjectif/Laskein/BackEnd/main-api
+#     - mkdir -p ~/.ssh
+#     - echo "$PRODUCTION_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+#     - chmod 600 ~/.ssh/id_rsa
+#     - rsync -avz -e "ssh -o StrictHostKeyChecking=no" . $PRODUCTION_USERNAME@$PRODUCTION_HOST:/opt/projetobjectif/Laskein/BackEnd/main-api/
+#     - ssh $PRODUCTION_USERNAME@$PRODUCTION_HOST "cd /opt/projetobjectif/Laskein/BackEnd/main-api && sh deploy.sh"
+#   variables:
+#     HOST: $PRODUCTION_HOST
+#     USERNAME: $PRODUCTION_USERNAME
+#     PORT: $PRODUCTION_PORT
+#     PRIVATE_KEY: $PRODUCTION_PRIVATE_KEY
+#   only:
+#     - master
+
+preprod-deploy-job:
+  stage: deploy
+  image: ubuntu:latest
+  script:
+    - apt-get update && apt-get install -y ssh rsync
+    - rm -f .env
+    - cp .gitlab/env/.env.preprod .env
+    - rm -f docker-compose.yml
+    - cp .gitlab/docker/docker-compose-preprod.yml docker-compose.yml
+    - mkdir -p /var/www/uat/back-end
+    - mkdir -p ~/.ssh
+    - echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - rsync -avz -e "ssh -o StrictHostKeyChecking=no" . $USERNAME@$HOST:/var/www/uat/back-end/
+    - ssh $USERNAME@$HOST "cd /var/www/uat/back-end && sh .gitlab/script/deploy-preprod.sh"
+  variables:
+    HOST: $HOST
+    USERNAME: $USERNAME
+    PORT: $PORT
+    PRIVATE_KEY: $PRIVATE_KEY
+  only:
+    - preprod
+  tags:
+    - develop
+
+staging-deploy-job:
+  stage: deploy
+  image: ubuntu:latest
+  script:
+    - apt-get update && apt-get install -y ssh rsync
+    - rm -f .env
+    - cp .gitlab/env/.env.staging .env
+    - rm -f docker-compose.yml
+    - cp .gitlab/docker/docker-compose-staging.yml docker-compose.yml
+    - mkdir -p /var/www/dev/back-end
+    - mkdir -p ~/.ssh
+    - echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - rsync -avz -e "ssh -o StrictHostKeyChecking=no" . $USERNAME@$HOST:/var/www/dev/back-end/
+    - ssh $USERNAME@$HOST "cd /var/www/dev/back-end && sh .gitlab/script/deploy-staging.sh"
+  variables:
+    HOST: $HOST
+    USERNAME: $USERNAME
+    PORT: $PORT
+    PRIVATE_KEY: $PRIVATE_KEY
+  only:
+    - staging
+  tags:
+    - develop
+
+develop-deploy-job:
+  stage: deploy
+  image: ubuntu:latest
+  script:
+    - apt-get update && apt-get install -y ssh rsync
+    - rm -f .env
+    - cp .gitlab/env/.env.develop .env
+    - rm -f docker-compose.yml
+    - cp .gitlab/docker/docker-compose-develop.yml docker-compose.yml
+    - mkdir -p /opt/projetobjectif/Laskein/BackEnd/develop-api
+    - mkdir -p ~/.ssh
+    - echo "$PRIVATE_KEY_OBJ" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - rsync -avz -e "ssh -o StrictHostKeyChecking=no" . $USERNAME_OBJ@$HOST_OBJ:/opt/projetobjectif/Laskein/BackEnd/develop-api/
+    - ssh $USERNAME_OBJ@$HOST_OBJ "cd /opt/projetobjectif/Laskein/BackEnd/develop-api && sh .gitlab/script/deploy-develop.sh"
+  variables:
+    HOST: $HOST_OBJ
+    USERNAME: $USERNAME_OBJ
+    PORT: $PORT
+    PRIVATE_KEY: $PRIVATE_KEY_OBJ
+  only:
+    - develop
+  tags:
+    - develop

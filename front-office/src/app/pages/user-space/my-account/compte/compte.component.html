@@ -1,0 +1,125 @@
+<div class="w-auto">
+  <div class="">
+    <div class="flex justify-end pt-2 pb-2">
+      <button
+        (click)="updateUserInfo()"
+        [disabled]="this.compteForm.disabled"
+        class="rounded !bg-[#1976D2] border border-[#1976D2] hover:border-[#062d54] w-36 text-button">
+        <i class="fas fa-save"></i>
+        <!-- ENREGISTRER -->{{ 'compte.Enregistrer' | translate }}
+      </button>
+      <button
+        class="w-36 myBtn-edit"
+        [disabled]="!this.compteForm.disabled"
+        (click)="handleEnablingForm()">
+        <i class="fas fa-edit"></i>
+        <!-- MODIFIER -->{{ 'compte.Modifier' | translate }}
+      </button>
+    </div>
+    <hr class="w-[93%] mx-auto" />
+    <form class="bg-white rounded px-8 pt-4 pb-8" [formGroup]="compteForm">
+      <div class="pb-8 flex flex-col">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label>
+            <!-- Username -->{{ 'compte.Nom_d_utilisateur' | translate }}
+          </label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="username"
+              id="username"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(compteForm.controls['username'], 'username')
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-8 flex flex-col">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label> <!-- Email -->{{ 'compte.E_mail' | translate }} </label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="email"
+              id="email"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(compteForm.controls['email'], 'email')
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-8 flex flex-col">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label>
+            <!-- Mot de passe -->{{ 'compte.Mot_de_passe' | translate }}
+          </label>
+          <div class="relative">
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+            <span
+              class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              (click)="togglePasswordVisibility()">
+              <i *ngIf="showPassword" class="fa fa-eye cursor-pointer"></i>
+              <i
+                *ngIf="!showPassword"
+                class="fa fa-eye-slash cursor-pointer"></i>
+            </span>
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(compteForm.controls['password'], 'password')
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-8 flex flex-col">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label>
+            <!-- Confirmer mot de passe  -->{{
+              'compte.Confirmer_mot_de_passe' | translate
+            }}
+          </label>
+          <div class="relative">
+            <input
+              id="passwordConfirm"
+              type="password"
+              formControlName="passwordConfirm"
+              [type]="showPasswordConfirm ? 'text' : 'password'"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+            <span
+              class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              (click)="togglePasswordConfirmVisibility()">
+              <i
+                *ngIf="showPasswordConfirm"
+                class="fa fa-eye cursor-pointer"></i>
+              <i
+                *ngIf="!showPasswordConfirm"
+                class="fa fa-eye-slash cursor-pointer"></i>
+            </span>
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(
+              compteForm.controls['passwordConfirm'],
+              'passwordConfirm'
+            )
+          }}</small>
+          <small class="float-right">
+            {{ passwordMatch() }}
+          </small>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+yarn build
+# npx --no-install validate-branch-name
+
+# # Obtenir le nom de la branche actuelle
+# current_branch=$(git symbolic-ref --short HEAD)
+
+# # Vérifier si la branche actuelle est "preprod"
+# if [ "$current_branch" = "preprod" ]; then
+#   # Obtenir le message du dernier commit
+#   commit_message=$(git log -1 --pretty=%B)
+
+#   # Si le commit contient "BREAKING CHANGE", exécutez yarn release:major
+#   if echo "$commit_message" | grep -qE 'BREAKING CHANGE'; then
+#     yarn release:major
+#   else
+#     # Sinon, déterminez le type de commit en fonction du message
+#     if echo "$commit_message" | grep -qE '^(feat)'; then
+#       # Si le commit contient "feat", exécutez yarn release:minor
+#       yarn release:minor
+#     elif echo "$commit_message" | grep -qE '^(fix)'; then
+#       # Si le commit contient "fix", exécutez yarn release:patch
+#       yarn release:patch
+#     else
+#       # Si aucun cas ne correspond, exécutez yarn release:patch (par défaut)
+#       yarn release:patch
+#     fi
+#   fi
+# fi

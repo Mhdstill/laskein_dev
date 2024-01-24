@@ -1,0 +1,441 @@
+<div class="flex w-full max-w-screen-xl mx-auto pt-16 h-[848px]">
+  <div class="w-4/5 p-6 !bg-[#44566C]">
+    <div class="rounded p-1 !bg-[#2F435E]">
+      <div class="pt-4 flex justify-between">
+        <button
+          (click)="goToStore()"
+          class="rounded-full !bg-[#1976D2] w-52 h-7 text-button flex items-center justify-center">
+          {{ 'panier.acheter_a_nouveau' | translate }}
+        </button>
+        <div class="pr-3 text-[20px]">
+          {{ 'panier.Total_panier' | translate }} :
+          {{ calculateTotalPrice() }} €
+        </div>
+      </div>
+      <div *ngIf="UserMe" class="px-2 py-3">
+        <div>
+          {{ 'panier.Dernière_adresse_de_livraison' | translate }} :
+          {{ UserMe?.address?.secondAdress }}{{ ' '
+          }}{{ UserMe?.address?.firstAdress }}{{ ' '
+          }}{{ UserMe?.address?.city }} {{ UserMe?.address?.region }}
+          <button (click)="handleEnablingForm()" class="!text-[#286CA8]">
+            Editer
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center py-8">
+      <button
+        (click)="showModalLivraison = true; showModalVendre = false"
+        class="mx-2 my-2 transition duration-150 ease-in-out focus:outline-none rounded text-gray-800 border border-gray-300 px-6 py-2 text-xs">
+        <i class="fa-solid fa-truck"></i>{{ '' }}
+        {{ 'panier.Livraison' | translate }}
+      </button>
+      <button
+        (click)="showModalVendre = true; showModalLivraison = false"
+        class="mx-2 my-2 flex justify-center transition duration-150 ease-in-out hover:border-[#d17991] hover:text-[#d17991] rounded border border-[#d17991] !text-[#d17991] px-6 py-2 text-xs">
+        <img src="/assets/img/currency.png" class="pr-2" alt="currency" />
+        {{ 'panier.Vendre' | translate }}
+      </button>
+    </div>
+    <div
+      *ngIf="showModalLivraison"
+      (click)="showModalLivraison = false"
+      class="flex flex-col w-1/3 ml-auto mr-auto modal-bg justify-center items-center">
+      <div
+        *ngIf="UserMe"
+        class="py-12 modal__overlay dark:bg-gray-900 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+        id="modal">
+        <div
+          role="modal"
+          class="mx-auto container flex justify-center w-full md:w-2/3 max-w-lg pt-[80px]">
+          <div
+            class="!bg-[#2d486e] p rounded-xl shadow fixed overflow-y-auto sm:h-auto w-10/12 md:w-8/12 lg:w-1/2 2xl:w-2/5">
+            <div
+              class="!bg-[#2d486e] rounded-tl-md rounded-tr-md px-8 md:px-8 md:py-4 pt-3 flex items-center justify-between">
+              <p class="text-h6 pl-6 font-semibold">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                {{
+                  'panier.Veuillez_vérifier_votre_adresse_de_livraison'
+                    | translate
+                }}
+              </p>
+              <button
+                (click)="getPostLivre()"
+                class="text-h6 font-semibold uppercase focus:outline-none ml-3 !bg-[#1976D2] dark:bg-gray-700 dark:border-gray-700 dark:hover:bg-gray-600 transition duration-150 text-gray-600 dark:text-gray-400 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
+                {{ 'panier.Valider' | translate }}
+              </button>
+            </div>
+            <div class="px-4 md:px-10">
+              <div class="flex items-center justify-between">
+                <div class="uppercase text-h6 pl-6 pb-2 font-semibold">
+                  {{ UserMe?.firstName }} {{ UserMe?.lastName }}
+                </div>
+                <button
+                  [disabled]="!this.adresseForm.disabled"
+                  (click)="handleEnablingForm()">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+              </div>
+            </div>
+            <div class="px-4 md:px-10 pb-2">
+              <span class="uppercase text-h6 font-semibold pl-6">{{
+                UserMe?.address?.secondAdress
+              }}</span>
+            </div>
+            <div class="px-4 md:px-10 pb-2">
+              <span class="uppercase text-h6 font-semibold pl-6">
+                {{ UserMe?.address?.firstAdress }}
+              </span>
+            </div>
+            <div class="px-4 md:px-10 pb-2">
+              <span class="pl-6 uppercase text-h6 font-semibold">
+                {{ UserMe?.address?.city }} {{ UserMe?.address?.region }}
+              </span>
+            </div>
+            <div class="px-4 md:px-10 pb-2">
+              <span class="pl-6 uppercase text-h6 font-semibold">
+                {{ UserMe?.address?.country }}
+              </span>
+            </div>
+            <div class="px-4 md:px-10 pb-8">
+              <span class="pl-6 uppercase text-h6 font-semibold"
+                >{{ 'panier.Numéro_de_téléphone' | translate }}:
+                {{ UserMe?.phone }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="showModalEditLivraison"
+      class="flex flex-col w-1/3 ml-auto mr-auto modal-bg justify-center items-center">
+      <div
+        class="py-12 modal__overlay dark:bg-gray-900 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+        id="modal">
+        <div
+          role="modal"
+          class="mx-auto container flex justify-center w-full md:w-2/3 max-w-lg pt-[px]">
+          <div
+            class="!bg-[#2d486e] p rounded-xl shadow fixed overflow-y-auto sm:h-auto w-[56%]">
+            <div
+              class="!bg-[#2d486e] rounded-tl-md rounded-tr-md px-8 md:px-8 md:py-4 pt-3 flex items-center justify-between">
+              <p class="text-h6 pl-6 w-full pr-4 font-semibold">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                {{
+                  'panier.Veuillez_vérifier_votre_adresse_de_livraison'
+                    | translate
+                }}
+              </p>
+              <button
+                (click)="updateUserInfo()"
+                class="text-h6 font-semibold uppercase focus:outline-none ml-3 !bg-[#1976D2] dark:bg-gray-700 dark:border-gray-700 dark:hover:bg-gray-600 transition duration-150 text-gray-600 dark:text-gray-400 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
+                {{ 'panier.Enregistrer' | translate }}
+              </button>
+            </div>
+
+            <form
+              class="bg-white rounded px-8 pt-4 pb-8"
+              [formGroup]="adresseForm">
+              <div class="pb-4">
+                <div class="flex flex-row justify-between items-end gap-10">
+                  <label>
+                    {{ 'panier.Address1' | translate }}
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="{{
+                        'panier.Rue_voie_boîte_postale' | translate
+                      }}"
+                      formControlName="adresse1"
+                      id="adresse1"
+                      class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <small class="float-right">{{
+                    getInputError(adresseForm.controls['adresse1'], 'adresse1')
+                  }}</small>
+                </div>
+              </div>
+              <div class="pb-4">
+                <div class="flex flex-row justify-between items-end gap-10">
+                  <label>
+                    {{ 'panier.Address2' | translate }}
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="{{ 'panier.Batiment_étage' | translate }}"
+                      formControlName="adresse2"
+                      id="adresse2"
+                      class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <small class="float-right">{{
+                    getInputError(adresseForm.controls['adresse2'], 'adresse2')
+                  }}</small>
+                </div>
+              </div>
+              <div class="pb-4">
+                <div class="flex flex-row justify-between items-end gap-10">
+                  <label>
+                    {{ 'panier.Code_postale' | translate }}
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      formControlName="codePostale"
+                      id="codePostale"
+                      class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <small class="float-right">{{
+                    getInputError(
+                      adresseForm.controls['codePostale'],
+                      'codePostale'
+                    )
+                  }}</small>
+                </div>
+              </div>
+              <div class="pb-4">
+                <div class="flex flex-row justify-between items-end gap-10">
+                  <label>
+                    {{ 'panier.Ville' | translate }}
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      formControlName="ville"
+                      id="ville"
+                      class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <small class="float-right">{{
+                    getInputError(adresseForm.controls['ville'], 'ville')
+                  }}</small>
+                </div>
+              </div>
+              <div class="pb-8">
+                <div class="flex flex-row justify-between items-end gap-10">
+                  <label>
+                    {{ 'panier.Région' | translate }}
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      formControlName="region"
+                      id="Région"
+                      class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <small class="float-right">{{
+                    getInputError(adresseForm.controls['region'], 'region')
+                  }}</small>
+                </div>
+              </div>
+              <div class="pb-8">
+                <div class="flex flex-row justify-between items-end gap-10">
+                  <label>
+                    {{ 'panier.Pays' | translate }}
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder=""
+                      formControlName="pays"
+                      id="pays"
+                      class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <small class="float-right">{{
+                    getInputError(adresseForm.controls['pays'], 'pays')
+                  }}</small>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="showModalVendre"
+      (click)="showModalVendre = false"
+      class="flex flex-col w-1/3 ml-auto mr-auto modal-bg justify-center items-center">
+      <div
+        class="py-12 modal__overlay dark:bg-gray-900 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+        id="modal">
+        <div
+          role="modal"
+          class="mx-auto container flex justify-center w-full md:w-2/3 max-w-lg pt-[180px]">
+          <div
+            class="!bg-[#2d486e] rounded-xl shadow fixed overflow-y-auto sm:h-auto w-10/12 md:w-8/12 lg:w-1/2 2xl:w-2/5">
+            <div
+              class="!bg-[#2d486e] rounded-tl-md rounded-tr-md px-4 md:px-8 md:py-4 pt-3 flex items-center justify-between">
+              <p class="text-h6 font-semibold">
+                {{ 'popupVendre' | translate }}
+                {{ totalSelectedPriceFormatted || '0' }} €
+              </p>
+            </div>
+            <div class="px-4 md:px-10 md:pt-12 md:pb-4 pb-7">
+              <div class="flex items-center justify-between">
+                <div>
+                  <button
+                    (click)="showModalVendre = false"
+                    class="text-h6 font-semibold uppercase focus:outline-none transition duration-150 ease-in-out hover:bg-[#034EA2] bg-[#034EA2] rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm">
+                    {{ 'panier.Annuler' | translate }}
+                  </button>
+                </div>
+                <div>
+                  <button
+                    (click)="getPostVendre()"
+                    class="text-h6 font-semibold uppercase focus:outline-none ml-3 !bg-[#1976D2] dark:bg-gray-700 dark:border-gray-700 dark:hover:bg-gray-600 transition duration-150 text-gray-600 dark:text-gray-400 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
+                    {{ 'panier.Valider' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="!bg-[#2F435E]">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead
+            class="text-xs text-gray-700 bg-[#2F435E] border-b dark:text-gray-400 dark:border-slate-500">
+            <tr>
+              <th
+                class="flex justify-center items-center py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="selectAllChecked"
+                  (change)="selectAllCheckboxChanged()"
+                  class="w-5 h-5" />
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3"
+                *ngFor="let title of titles; index as i">
+                <div class="flex items-center">
+                  {{ title | translate }}
+                  <a class="ml-5 cursor-pointer">
+                    <svg
+                      width="14"
+                      height="13"
+                      viewBox="0 0 14 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      *ngIf="i !== 0">
+                      <path
+                        d="M0.988281 6.31L7 0.298279L13.0117 6.31L11.9219 7.36469L7.73828 3.18109V12.3217H6.26172V3.18109L2.04297 7.36469L0.988281 6.31Z"
+                        fill="#ECECEC" />
+                    </svg>
+                  </a>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="bg-[#2F435E] border-b dark:border-slate-500"
+              *ngFor="
+                let data of listShoppingCart.slice(
+                  (currentPage - 1) * itemsPerPage,
+                  currentPage * itemsPerPage
+                )
+              ">
+              <th
+                scope="row"
+                class="flex justify-center items-center py-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="data.isSelected"
+                  (ngModelChange)="individualCheckboxChanged(data, $event)"
+                  class="w-5 h-5" />
+              </th>
+              <th
+                scope="row"
+                class="pr-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <img
+                  [src]="
+                    getBoxImageURL(
+                      data.game.article.articlePhoto[0]?.photoUrl || ''
+                    )
+                  "
+                  class="w-20 h-20" />
+                <!-- <img
+                  [src]="
+                    getBoxImageURL(
+                      data.game.article.articlePhoto[0].photoUrl || ''
+                    )
+                  "
+                  class="w-20 h-20" /> -->
+              </th>
+              <td class="px-4 py-2">
+                {{ data.game.article.designation.substring(0, 8) }}
+              </td>
+              <td class="px-4 py-2">
+                {{ data.game.article.price.currentPrice }} €
+              </td>
+              <td class="px-4 py-2 w-52" *ngIf="data.game.article.observation">
+                {{ data.game.article.observation.substring(0, 60) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex p-2 justify-center items-center">
+          <div class="flex w-11/12 text-right">
+            <span class="ml-auto">
+              {{ (currentPage - 1) * itemsPerPage + 1 }} -
+              {{ calculateUpperLimit() }} {{ 'panier.sur' | translate }}
+              {{ listShoppingCart.length }}
+            </span>
+          </div>
+          <div class="w-1/12">
+            <div class="float-right flex justify-center items-center">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="mr-10 cursor-pointer"
+                (click)="goToPage(currentPage - 1)"
+                *ngIf="currentPage > 1">
+                <path
+                  d="M19.4219 11.4062L14.8281 16L19.4219 20.5938L18.0156 22L12.0156 16L18.0156 10L19.4219 11.4062Z"
+                  fill="#ECECEC" />
+              </svg>
+              <svg
+                width="8"
+                height="12"
+                viewBox="0 0 8 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="cursor-pointer"
+                (click)="goToPage(currentPage + 1)"
+                *ngIf="currentPage * itemsPerPage < listShoppingCart.length">
+                <path
+                  d="M1.98438 0L7.98438 6L1.98438 12L0.578125 10.5938L5.17188 6L0.578125 1.40625L1.98438 0Z"
+                  fill="white" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-auto w-1/5 pl-1" id="style-4">
+    <app-best-sellers [boxList]="getBoxList()" [cardBoxItem]="cardBoxItem">
+    </app-best-sellers>
+  </div>
+</div>

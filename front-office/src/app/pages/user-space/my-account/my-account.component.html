@@ -1,0 +1,37 @@
+<div class="w-full h-[858px] justify-start items-start gap-2 flex">
+  <div
+    class="min-h-[926px] w-1/5 !bg-[#2F435E] flex-col justify-start items-center flex">
+    <a
+      *ngFor="let menu of menuList"
+      (click)="changeTab(menu.key)"
+      [class.active]="activeTab === menu.key"
+      class="cursor-pointer border-b-2 w-full border-transparent inline-block p-3 text-sm font-medium text-[#ddd2d8] hover:text-[#D4569B] hover:border-[#e7e2e5]"
+      [style]="getBgColorActiveTab(menu.key)">
+      <div class="flex justify-between">
+        <div>
+          <i [class]="getIconClass(menu.key)" class="p-2"></i>
+          {{ menu.value | translate }}
+        </div>
+        <img src="/assets/svg/arrow.svg" />
+      </div>
+    </a>
+  </div>
+  <div
+    class="w-4/5 h-[826px] !bg-[#2F435E] flex-col justify-start items-center gap-10 flex">
+    <div *ngIf="activeTab === menuKeys[0]" class="w-full">
+      <app-profil></app-profil>
+    </div>
+    <div *ngIf="activeTab === menuKeys[1]" class="w-full">
+      <app-porte-feuille></app-porte-feuille>
+    </div>
+    <div *ngIf="activeTab === menuKeys[2]" class="w-full">
+      <app-mon-adresse></app-mon-adresse>
+    </div>
+    <div *ngIf="activeTab === menuKeys[3]" class="w-full">
+      <app-compte></app-compte>
+    </div>
+    <div *ngIf="activeTab === menuKeys[4]" class="w-full">
+      <app-statu-code></app-statu-code>
+    </div>
+  </div>
+</div>

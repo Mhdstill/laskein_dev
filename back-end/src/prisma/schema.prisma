@@ -1,0 +1,683 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // output = "../../type"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                           String              @id @default(auto()) @map("_id") @db.ObjectId
+  firstName                    String
+  lastName                     String?
+  username                     String              @unique
+  photoUrl                     String?
+  email                        String              @unique
+  isActif                      Boolean             @default(true)
+  isMember                     Boolean             @default(false)
+  isAdmin                      Boolean             @default(false)
+  emailIsVerified              Boolean             @default(false)
+  twoAuthIsActive              Boolean             @default(false)
+  phone                        String?
+  gender                       EnumGender?
+  birthDate                    DateTime?
+  password                     String
+  socketId                     String?
+  refreshToken                 String?
+  supportingDocumentUrl        String?
+  isValideSupportingDocument   Boolean             @default(false)
+  registrationBonus            Float?
+  latestConnectedDate          DateTime?
+  signInCount                  Int?
+  lotCount                     Int?                @default(1)
+  createdAt                    DateTime?           @default(now())
+  updatedAt                    DateTime?           @updatedAt
+  rule                         Rule?               @relation(fields: [ruleId], references: [id])
+  ruleId                       String?             @db.ObjectId
+  address                      Address?
+  codeConfirmLogin             CodeConfirmLogin[]
+  codeConfirmMail              CodeConfirmMail[]
+  wallet                       Wallet?
+  shoppingCart                 ShoppingCart[]
+  userBox                      UserBox[]
+  historical                   Historical[]
+  message                      Message[]
+  receiver                     Receiver[]
+  temoignage                   Temoignage[]
+  subscription                 Subscription[]
+  patronage                    Patronage[]
+  outerTransaction             OuterTransaction[]          
+  userChild                    Patronage?          @relation(name: "userChild")
+  stripeCustomerId             String?
+}
+
+enum EnumGender {
+  MAN
+  WOMAN
+}
+
+enum EnumStatusPatronage {
+  APPROVED
+  PENDING
+  END
+}
+
+model Patronage {
+  id                   String     @id @default(auto()) @map("_id") @db.ObjectId
+  gainPercentage       Float?
+  discountPercentage   Float?
+  status               EnumStatusPatronage?
+  bonusEndDate         DateTime?
+  userParent           User       @relation(fields: [userParentId], references: [id], onDelete: Cascade)
+  userParentId         String     @db.ObjectId
+  userChild            User       @relation(name: "userChild", fields: [userChildId], references: [id], onDelete: Cascade)
+  userChildId          String     @db.ObjectId @unique
+  bonusCollect         Boolean?   @default(false)
+  createdAt            DateTime?  @default(now())
+  updatedAt            DateTime?  @updatedAt
+  game                 Game[]
+}
+
+model CodeConfirmLogin {
+  id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  uuid          String             @unique
+  user          User               @relation(fields: [useId], references: [id], onDelete: Cascade)
+  useId         String             @db.ObjectId
+  createdAt     DateTime?          @default(now())
+  updatedAt     DateTime?          @updatedAt
+}
+
+model CodeConfirmMail {
+  id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  uuid          String             @unique
+  user          User               @relation(fields: [useId], references: [id], onDelete: Cascade)
+  useId         String             @db.ObjectId
+  createdAt     DateTime?          @default(now())
+  updatedAt     DateTime?          @updatedAt
+}
+
+model TokenBlackList {
+  id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  token         String             @unique
+  createdAt     DateTime?          @default(now())
+  updatedAt     DateTime?          @updatedAt
+}
+
+model Rule {
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  name              String             @unique
+  keyword           String             @unique
+  user              User[]
+  permissionIDs     String[]           @db.ObjectId
+  permissions       Permission[]       @relation(fields: [permissionIDs], references: [id])
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @updatedAt
+}
+
+enum EnumPermission {
+  READ
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model Permission {
+  id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  name          EnumPermission      
+  keyword       String             @unique
+  rulesIDs      String[]           @db.ObjectId
+  rules         Rule[]             @relation(fields: [rulesIDs], references: [id])
+  modelsIDs     String[]           @db.ObjectId
+  models        Model[]            @relation(fields: [modelsIDs], references: [id])
+  createdAt     DateTime?          @default(now())
+  updatedAt     DateTime?          @updatedAt
+}
+
+
+model Model {
+  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  name               String        @unique
+  keyword            String        @unique
+  permissionIDs      String[]      @db.ObjectId
+  permissions        Permission[]  @relation(fields: [permissionIDs], references: [id])
+  createdAt          DateTime?     @default(now())
+  updatedAt          DateTime?     @updatedAt
+}
+
+
+model Address {
+  id                           String        @id @default(auto()) @map("_id") @db.ObjectId
+  firstAdress                  String        
+  secondAdress                 String?        
+  zipCode                      String        
+  city                         String        
+  region                       String        
+  country                      String        
+  additionnalInformation       String?
+  user                         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                       String          @db.ObjectId @unique
+  createdAt                    DateTime?       @default(now())
+  updatedAt                    DateTime?       @updatedAt
+}
+
+model Wallet {
+  id                           String        @id @default(auto()) @map("_id") @db.ObjectId
+  balance                      Float               
+  user                         User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                       String?        @db.ObjectId @unique
+  transaction                  Transaction[]
+  createdAt                    DateTime?     @default(now())
+  updatedAt                    DateTime?     @updatedAt
+}
+
+
+model BoxType {
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  reference         String        @unique
+  name              String
+  box               Box[]
+  createdAt         DateTime?     @default(now())
+  updatedAt         DateTime?     @updatedAt
+}
+
+enum EnumBadgeBox {
+   TENDANCE
+   SOLDE
+}
+
+model Box {
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  reference           String         @unique
+  name                String
+  price               Float
+  number              Int
+  description         String
+  badge               EnumBadgeBox?
+  boxImage            BoxImage[]
+  article             Article[]
+  transaction         Transaction[]
+  userBox             UserBox[]
+  bannerImage         BannerImage[]
+  boxParams           BoxParams?
+  boxType             BoxType?        @relation(fields: [boxTypeId], references: [id])
+  boxTypeId           String?         @db.ObjectId
+  boxArticle          BoxArticle[]
+  dailyReward         DailyReward[]
+  boxRewardLevel      BoxRewardLevel[]
+  createdAt           DateTime?       @default(now())
+  updatedAt           DateTime?       @updatedAt
+}
+
+model DailyReward {
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  number              Int            @unique
+  box                 Box            @relation(fields: [boxId], references: [id])
+  boxId               String         @db.ObjectId
+}
+
+model BoxRewardLevel {
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  box                 Box            @relation(fields: [boxId], references: [id], onDelete: Cascade)
+  boxId               String         @db.ObjectId
+  rewardLevel         RewardLevel    @relation(fields: [rewardLevelId], references: [id], onDelete: Cascade)
+  rewardLevelId       String         @db.ObjectId
+}
+
+model RewardLevel {
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  orderNumber         Int            @unique
+  name                String         @unique
+  unlockThreshold     Float
+  description         String?
+  boxRewardLevel      BoxRewardLevel[]
+}
+
+enum EnumBoxImageStatus {
+   CLOSED
+   OPENED
+   PLAYING
+   OTHER
+}
+
+model BoxImage {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  photoUrl      String
+  status        EnumBoxImageStatus
+  box           Box            @relation(fields: [boxId], references: [id], onDelete: Cascade)
+  boxId         String         @db.ObjectId
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @updatedAt
+}
+
+model Provider {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  reference     String         @unique
+  companyName   String
+  address       String?
+  phone         String?
+  webSite       String?
+  logo          String?
+  isPinned      Boolean?
+  article       Article[]
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @updatedAt
+}
+
+model Category {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  reference     String         @unique
+  name          String
+  subCategory   SubCategory[]
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @updatedAt
+}
+
+model SubCategory {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  reference     String         @unique
+  name          String
+  category      Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId    String         @db.ObjectId
+  article       Article[]
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @updatedAt
+}
+
+model UnitySize {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String         @unique
+  abbreviation  String         @unique
+  article       Article[]
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @updatedAt
+}
+
+enum EnumTypeMode {
+   MAN
+   WOMAN
+   CHILD
+}
+
+model Article {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  reference         String         @unique
+  designation       String        
+  type              EnumTypeMode?
+  size              String?        
+  color             String?        
+  productUrl        String?        
+  observation       String?        
+  winningChance     Float?
+  provider          Provider?      @relation(fields: [providerId], references: [id])
+  providerId        String?        @db.ObjectId
+  unitySize         UnitySize?     @relation(fields: [unitySizeId], references: [id])
+  unitySizeId       String?        @db.ObjectId
+  subCategory       SubCategory?   @relation(fields: [subCategoryId], references: [id])
+  subCategoryId     String         @db.ObjectId
+  box               Box?           @relation(fields: [boxId], references: [id])
+  boxId             String?        @db.ObjectId
+  articlePhoto      ArticlePhoto[]
+  post              Post[]
+  price             Price?
+  boxArticle        BoxArticle[]
+  game              Game[]
+  createdAt         DateTime?      @default(now())
+  updatedAt         DateTime?      @updatedAt
+}
+
+model BoxArticle {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  winningChance     Float
+  box               Box         @relation(fields: [boxId], references: [id], onDelete: Cascade)
+  boxId             String      @db.ObjectId
+  article           Article     @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId         String      @db.ObjectId
+  createdAt         DateTime?   @default(now())
+  updatedAt         DateTime?   @updatedAt
+}
+
+enum ArticlePhotoStatus {
+  FIRST
+  SECOND
+  THIRD
+  LAST
+}
+
+
+model ArticlePhoto {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  photoUrl      String
+  status        ArticlePhotoStatus?
+  article       Article    @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId     String     @db.ObjectId
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+}
+
+model Post {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  content       String
+  postUrl       String
+  article       Article    @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId     String     @db.ObjectId
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+}
+
+model Price {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  reference     String?        
+  currentPrice  Float        
+  oldPrice      Float?        
+  rate          Float?        
+  reduction     Float?        
+  sellingPrice  Float?        
+  article       Article    @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId     String     @db.ObjectId @unique
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+}
+
+enum EnumOrderStatus {
+  PENDING
+  INPROGRESS
+  ONDELIVERY
+  DELIVERED
+}
+
+model Order {
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  status              EnumOrderStatus       @default(PENDING)
+  followedLink        String?
+  orderNumber         String?
+  shoppingCart        ShoppingCart          @relation(fields: [shoppingCartId], references: [id])
+  shoppingCartId      String                @db.ObjectId @unique
+  createdAt           DateTime?             @default(now())
+  updatedAt           DateTime?             @updatedAt
+}
+
+model ShoppingCart {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  winningDate   DateTime
+  isClaimed     Boolean?   @default(false)
+  game          Game       @relation(fields: [gameId], references: [id])
+  gameId        String     @db.ObjectId @unique
+  user          User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String?     @db.ObjectId
+  transaction   Transaction[]
+  order         Order?
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+}
+
+enum EnumTypeTransaction {
+  DEPOSIT
+  EXCHANGE
+  WITHDRAWAL
+  PURCHASE
+  SUBSCRIBE
+  BONUS
+}
+
+enum EnumStatusTransaction {
+  PENDING
+  APPROVED
+  CANCELED
+}
+model Transaction {
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  type                EnumTypeTransaction
+  date                DateTime
+  amount              Float
+  status              EnumStatusTransaction
+  box                 Box?                   @relation(fields: [boxId], references: [id])
+  boxId               String?                @db.ObjectId
+  wallet              Wallet                 @relation(fields: [walletId], references: [id])
+  walletId            String                 @db.ObjectId
+  offer               Offer?                 @relation(fields: [offerId], references: [id])
+  offerId             String?                @db.ObjectId
+  shoppingCart        ShoppingCart?          @relation(fields: [shoppingCartId], references: [id])
+  shoppingCartId      String?                @db.ObjectId
+  bank                Bank?                  @relation(fields: [bankId], references: [id])
+  bankId              String?                @db.ObjectId
+  game                Game?                  @relation(fields: [gameId], references: [id])
+  gameId              String?                @db.ObjectId
+  createdAt           DateTime?              @default(now())
+  updatedAt           DateTime?              @updatedAt
+}
+
+model Bank {
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  accountNumber       String
+  transaction         Transaction[]
+  createdAt           DateTime?             @default(now())
+  updatedAt           DateTime?             @updatedAt
+}
+
+enum EnumUserBoxType {
+  PURCHASE
+  REWARD_LEVEL
+  DAILY_REWARD
+}
+model UserBox {
+  id                String                @id @default(auto()) @map("_id") @db.ObjectId
+  type              EnumUserBoxType
+  duration          DateTime?
+  dayNumber         Int?
+  isPlayed          Boolean?
+  isLocked          Boolean?
+  playedDate        DateTime?
+  activationDate    DateTime?
+  deactivationDate  DateTime?
+  orderNumber       Int?
+  name              String?
+  unlockThreshold   Float?
+  description       String?
+  user              User?                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String?                @db.ObjectId
+  box               Box                   @relation(fields: [boxId], references: [id])
+  boxId             String                @db.ObjectId
+  lot               Int?
+  createdAt         DateTime?             @default(now())
+  updatedAt         DateTime?             @updatedAt
+  game              Game[]
+}
+
+enum BannerImageType {
+  WELCOME
+  SUBSCRIPTION
+  SPONSORSHIP
+  ADVERTISEMENT
+}
+
+model BannerImage {
+  id            String                @id @default(auto()) @map("_id") @db.ObjectId
+  bannerImgUrl  String
+  bannerLink    String?
+  type          BannerImageType?
+  box           Box?                  @relation(fields: [boxId], references: [id])
+  boxId         String?               @db.ObjectId
+  offer         Offer?                @relation(fields: [offerId], references: [id])
+  offerId       String?               @db.ObjectId
+  createdAt     DateTime?             @default(now())
+  updatedAt     DateTime?             @updatedAt
+}
+
+model BoxParams {
+  id                    String                @id @default(auto()) @map("_id") @db.ObjectId
+  isBestSelling         Boolean               @default(false)
+  isRecommended         Boolean               @default(false)
+  isNew                 Boolean               @default(false)
+  isBigPrice            Boolean               @default(false)
+  isSubsciptionBonus    Boolean               @default(false)
+  box                   Box?                  @relation(fields: [boxId], references: [id])
+  boxId                 String                @db.ObjectId @unique
+  createdAt             DateTime?             @default(now())
+  updatedAt             DateTime?             @updatedAt
+}
+
+enum EnumHistoricalAction {
+  READ
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model Historical {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  date        DateTime   
+  description String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String     @db.ObjectId
+  action      EnumHistoricalAction
+  createdAt                    DateTime?           @default(now())
+  updatedAt                    DateTime?           @updatedAt
+}
+
+model Message {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  message     String
+  sendingDate DateTime
+  sender      User       @relation(fields: [senderId], references: [id])
+  senderId    String     @db.ObjectId
+  receiver    Receiver[]
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
+}
+
+model Receiver {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  readingDate DateTime
+  receiver    User       @relation(fields: [receiverId], references: [id])
+  receiverId  String     @db.ObjectId
+  message     Message    @relation(fields: [messageId], references: [id])
+  messageId   String     @db.ObjectId
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
+}
+
+model NewsLetter {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
+}
+
+model Temoignage {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  comment       String
+  rating        Int
+  commentDate   DateTime
+  isToShow      Boolean    @default(false)
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String     @db.ObjectId
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+}
+
+model Offer {
+  id                      String     @id @default(auto()) @map("_id") @db.ObjectId
+  name                    String
+  price                   Float
+  priceThreeMonth         Float?
+  color                   String?
+  numberMysteryBoxBronze  Int        @default(0)
+  numberMysteryBoxSylver  Int        @default(0)
+  numberMysteryBoxGold    Int        @default(0)
+  isAwardLevelActive      Boolean    @default(false)
+  isWeeklyAwardActive     Boolean    @default(false)
+  isStandardSupportActive Boolean    @default(true)
+  isVIPSupportActive      Boolean    @default(false)
+  duration                Float?
+  subscription            Subscription[]
+  bannerImage             BannerImage[]
+  createdAt               DateTime?       @default(now())
+  updatedAt               DateTime?       @updatedAt
+  transaction             Transaction[]
+}
+
+enum EnumPriceSubscription {
+  ONEMONTH
+  THREEMONTHS
+}
+
+enum EnumStatusSubscription {
+  INACTIVE
+  ACTIVE
+  SUSPENDED
+  CANCELED
+}
+
+model Subscription {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  startDate     DateTime
+  endDate       DateTime
+  durationType  EnumPriceSubscription?
+  status        EnumStatusSubscription?
+  autoRenewal   Boolean    @default(false)
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String     @db.ObjectId
+  offer         Offer      @relation(fields: [offerId], references: [id])
+  offerId       String     @db.ObjectId
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+}
+
+enum EnumStatusGame {
+  RUNNING
+  FINISHED
+  ERROR
+}
+
+enum EnumVersionGame {
+  FULL
+  DEMO
+}
+
+enum EnumTypeGame {
+  BOX
+  SPONSORED
+  PARENT
+}
+
+model Game {
+  id                   String          @id @default(auto()) @map("_id") @db.ObjectId
+  reference            String          @unique
+  startDate            DateTime
+  endDate              DateTime?
+  status               EnumStatusGame  @default(RUNNING)
+  version              EnumVersionGame?  
+  type                 EnumTypeGame?  
+  userBox              UserBox?        @relation(fields: [userBoxId], references: [id])
+  userBoxId            String?         @db.ObjectId
+  patronage            Patronage?      @relation(fields: [patronageId], references: [id])
+  patronageId          String?         @db.ObjectId
+  gainPercentage       Float?
+  gainDraw             Float?
+  article              Article?        @relation(fields: [articleId], references: [id])
+  articleId            String?         @db.ObjectId
+  createdAt            DateTime?       @default(now())
+  updatedAt            DateTime?       @updatedAt
+  shoppingCart         ShoppingCart?
+  transaction          Transaction[]
+}
+
+model OuterTransaction{
+  id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+  type                EnumTypeTransaction
+  date                DateTime
+  amount              Float
+  status              EnumStatusTransaction
+  sourceId            String?
+  userId              String     @db.ObjectId
+  user                User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  currency            String?
+  description         String?
+  stripeTransactionId String?
+}

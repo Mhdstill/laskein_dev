@@ -1,0 +1,36 @@
+<div class="p-1 !bg-[#2F435E]">
+  <form class="rounded py-4">
+    <div>
+      <div class="flex flex-row justify-between items-end gap-4">
+        <label class="pb-2">
+          <!-- Montant -->{{ 'wallet.Montant' | translate }}
+        </label>
+        <div class="relative">
+          <input
+            #amountInput
+            type="number"
+            placeholder="$xxxx"
+            id="somme"
+            (input)="onAmountChange($event)"
+            class="w-[400px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+        </div>
+
+        <div>
+          <button
+            [disabled]="!amountValue"
+            (click)="submitPayement(); amountInput.value = ''"
+            class="rounded !bg-[#1976D2] border border-[#1976D2] hover:border-[#062d54] w-36 text-button">
+            <i class="fas fa-save"></i>
+            <!-- VALIDER -->
+            <span *ngIf="isDeposit"
+              >&nbsp;{{ 'depositLabel' | translate }}</span
+            >
+            <span *ngIf="!isDeposit"
+              >&nbsp;{{ 'withdrawLabel' | translate }}</span
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

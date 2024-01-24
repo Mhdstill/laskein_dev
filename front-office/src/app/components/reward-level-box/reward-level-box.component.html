@@ -1,0 +1,13 @@
+<div class="flex flex-col">
+  <div
+    class="flex flex-col p-5 gap-1 rounded-[8px] w-[209px] !bg-gradient-to-b from-[#2f435e] from-[41.21%] via-[#4b5e65] via-[83.79%] to-[#201b22] to-[100%]">
+    <div
+      class="text-[20px] normal-case leading-5 tracking-[0.4px] !text-white !w-full px-1 bg-[#33B063] text-center mb-2">
+      {{ cardRewardLevelItem.topTitle }}
+    </div>
+    <img
+      [src]="getBoxImageURL(cardRewardLevelItem.imageUrl ?? '')"
+      class="w-[183px] h-[153px] rounded" />
+  </div>
+</div>
+<div class="text-center text-[30px]">x2</div>

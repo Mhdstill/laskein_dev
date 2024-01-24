@@ -1,0 +1,192 @@
+<header class="fixed w-full !bg-[#2f435e] z-10">
+  <div
+    class="w-full lg:h-[65px] md:h-auto sm:h-auto between flex flex-col items-center">
+    <div class="w-full flex items-center justify-between max-w-screen-xl">
+      <a href="/" class="flex justify-center items-center">
+        <h2
+          class="text-4xl font-bold tracking-tight py-3 pl-6 text-white sm:text-4xl">
+          Laskein
+        </h2>
+      </a>
+
+      <button
+        class="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+        type="button"
+        (click)="toggleNavbar()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- desktop menu -->
+      <div
+        class="grow justify-end items-start flex lg:flex md:hidden sm:hidden h-full">
+        <div class="grow justify-end items-center flex h-full">
+          <a
+            routerLink="/store"
+            class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white">
+            <img src="/assets/svg/menu/store.svg" class="w-5 h-5" alt="store" />
+            {{ 'accueil.menu.boutique' | translate }}
+          </a>
+          <a
+            routerLink="/subscription"
+            class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white">
+            <img src="/assets/svg/menu/subscription.svg" alt="store" />
+            {{ 'accueil.menu.abonnement' | translate }}
+          </a>
+          <a
+            (click)="showAlert()"
+            class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white">
+            <img src="/assets/svg/menu/game.svg" alt="store" />
+            {{ 'accueil.menu.multijoueur' | translate }}
+          </a>
+          <app-dropdown-menu
+            [dropDownLink]="true"
+            [addBorder]="false"
+            [dropdownList]="recompenseItems"
+            [dropDownTitle]="recompenseTitle"></app-dropdown-menu>
+          <a
+            href="/panier"
+            class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white">
+            <div class="relative">
+              <div class="bottom-4 absolute left-3">
+                <p
+                  class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
+                  {{ getListShoppingCartCount() }}
+                </p>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="file: h-8 w-8">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+              </svg>
+            </div>
+          </a>
+          <a
+            class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-[#2F435E]">
+            <i class="fa-solid fa-globe"></i>
+            <select
+              id="language"
+              class="!bg-[#2F435E]"
+              [(ngModel)]="selectedLanguage"
+              (ngModelChange)="updateLanguage($event)">
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+            </select>
+          </a>
+          <a
+            *ngIf="!isLoggedIn()"
+            routerLink="/auth"
+            class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white">
+            <img src="/assets/svg/menu/login.svg" alt="store" />
+            Login/Sign up
+          </a>
+        </div>
+
+        <div
+          class="!bg-[#3a4c61] flex items-center relative min-w-[200px]"
+          *ngIf="isLoggedIn()"
+          [style]="getProfileZoneWidth()">
+          <div class="absolute z-0 left-3">
+            <div class="relative w-[100px] flex items-center">
+              <div
+                class="border border-white w-[38px] h-[38px] rounded-full flex items-center justify-center bg-[#2F435E]">
+                {{ get1stCapitalizeName() }}
+              </div>
+              <app-profile-dropdown
+                [shortName]="getShortName()"
+                class="absolute w-full z-[2] right-0"></app-profile-dropdown>
+            </div>
+          </div>
+          <div class="flex flex-col ml-[100px] z-10" [style]="getMarginLeft()">
+            <span
+              class="!text-subtitle1 !text-white font-semibold border-b !border-b-[#DA7B93] text-right px-2"
+              >{{ getWallet() }} €
+            </span>
+            <div>
+              <app-dropdown-menu
+                [addBorder]="false"
+                [dropDownLink]="true"
+                (labelOptionClicked)="goToPortefeuil()"
+                [dropdownList]="walletItems"
+                [dropDownTitle]="walletTitle"></app-dropdown-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <!-- <div *ngIf="showMenu" class="gap-2 flex flex-col py-2 items-center w-full">
+      <div class="justify-start items-start flex flex-col">
+        <a
+          routerLink="/store"
+          class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white w-full">
+          <img src="/assets/svg/menu/store.svg" class="w-5 h-5" alt="store" />
+          Boutique
+        </a>
+        <a
+          routerLink="/subscription"
+          class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white w-full">
+          <img src="/assets/svg/menu/subscription.svg" alt="store" />
+          Abonnement
+        </a>
+        <a
+          href="#"
+          class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white w-full">
+          <img src="/assets/svg/menu/game.svg" alt="store" />
+          Multijoueur
+        </a>
+        <app-dropdown-menu
+          [dropDownLink]="true"
+          [addBorder]="false"
+          [dropdownList]="recompenseItems"
+          [dropDownTitle]="recompenseTitle"></app-dropdown-menu>
+        <a
+          href="#"
+          class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white w-full">
+          <img src="/assets/svg/menu/cart.svg" alt="store" />
+          Panier
+        </a>
+        <a
+          href="#"
+          class="px-4 text-subtitle1 text-white font-normal flex gap-1 h-full items-center justify-center cursor-pointer hover:!bg-[#44566C] hover:border-b-[2px] hover:border-b-white w-full">
+          <img src="/assets/svg/menu/login.svg" alt="store" />
+          Login/Sign up
+        </a>
+      </div>
+
+      <div
+        class="!bg-[#3a4c61] rounded-md flex items-center relative min-w-[200px]"
+        [style]="getProfileZoneWidth()">
+        <div class="absolute z-0 left-3" *ngIf="isLoggedIn()">
+          <div class="relative w-[100px] flex items-center">
+            <div
+              class="border border-white w-[38px] h-[38px] rounded-full flex items-center justify-center bg-[#2F435E]">
+              JD
+            </div>
+            <app-profile-dropdown
+              class="absolute w-full z-[2] right-0"></app-profile-dropdown>
+          </div>
+        </div>
+        <div class="flex flex-col ml-[100px] z-10" [style]="getMarginLeft()">
+          <span
+            class="!text-subtitle1 !text-white font-semibold border-b !border-b-[#DA7B93] text-right px-2"
+            >0,00€</span
+          >
+          <div>
+            <app-dropdown-menu
+              [addBorder]="false"
+              [dropdownList]="walletItems"
+              [dropDownTitle]="walletTitle"></app-dropdown-menu>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</header>

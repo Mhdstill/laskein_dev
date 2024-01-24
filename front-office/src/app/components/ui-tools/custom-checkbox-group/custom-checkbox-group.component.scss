@@ -1,0 +1,85 @@
+///////////////////////// CHECKBOX /////////////////////
+.check-group {
+  background: #fff;
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  //box-shadow: 0 1px 3px rgb(0 0 10 / 0.2);
+
+  counter-reset: checked;
+
+  //> * + * {
+  //  margin-top: 0.75rem;
+  //}
+
+  .checkbox {
+    counter-increment: total;
+  }
+
+  input[type='checkbox']:checked {
+    counter-increment: checked;
+  }
+
+  &__result {
+    font-weight: bold;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(0 0 0 / 0.2);
+
+    &:after {
+      content: counter(checked) ' / ' counter(total);
+      padding-left: 1ch;
+    }
+  }
+}
+
+.checkbox {
+  $block: &;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &__input {
+    position: absolute;
+    width: 1.375em;
+    height: 1.375em;
+    opacity: 0;
+    cursor: pointer;
+
+    &:checked + #{$block}__icon .tick {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  &__icon {
+    width: 1.375em;
+    height: 1.375em;
+    flex-shrink: 0;
+    overflow: visible;
+
+    .tick {
+      stroke-dasharray: 20px;
+      stroke-dashoffset: 20px;
+      transition: stroke-dashoffset 0.2s ease-out;
+    }
+  }
+
+  &__label {
+    margin-left: 0.5em;
+  }
+}
+
+* {
+  background-color: transparent !important;
+}
+
+input[type='checkbox'] {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.disabled-content {
+  pointer-events: none; /* Disable pointer events (clicks, etc.) */
+  opacity: 0.6; /* Make the content visually appear disabled */
+}

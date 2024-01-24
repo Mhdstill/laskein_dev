@@ -1,0 +1,96 @@
+<div class="!bg-[#2F435E] h-[500px] p-5" *ngIf="!showSpinFileulWheel">
+  <div>
+    <div class="flex justify-center items-center mb-5">
+      <div class="text-[20px] mr-auto">
+        {{ 'palier.Votre_dépense_actuelle' | translate }}
+        : {{ totalExpense }} €
+      </div>
+      <div
+        class="cursor-pointer flex justify-center items-center ml-auto !bg-[#2196F3] pt-1 pb-1 pl-2 pr-2 rounded"
+        (click)="goToSpin()">
+        <span class="mr-2">
+          <svg
+            width="16"
+            height="15"
+            viewBox="0 0 16 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.3438 7.65503L13.7188 9.53003L13.9375 11.9675L11.5312 12.53L10.2812 14.655L8 13.6863L5.71875 14.655L4.46875 12.53L2.0625 11.9675L2.28125 9.53003L0.65625 7.65503L2.28125 5.78003L2.0625 3.31128L4.46875 2.78003L5.71875 0.655029L8 1.62378L10.2812 0.655029L11.5312 2.78003L13.9375 3.34253L13.7188 5.78003L15.3438 7.65503ZM6.71875 10.8113L11.625 5.90503L10.625 4.90503L6.71875 8.84253L5.1875 7.28003L4.1875 8.24878L6.71875 10.8113Z"
+              fill="white" />
+          </svg>
+        </span>
+        <span>
+          {{
+            'parrainage.Récupérez_votre_bonus_en_tant_que_filleul' | translate
+          }}
+        </span>
+      </div>
+    </div>
+    <hr />
+    <div class="mt-5">
+      <div class="mb-5">
+        {{
+          'parrainage.Dépense_minimum_requise_pour_récupérer_le_bonus'
+            | translate
+        }}
+        : 50 €
+      </div>
+    </div>
+  </div>
+</div>
+<div class="!bg-[#2F435E] h-fit p-5" *ngIf="showSpinFileulWheel">
+  <div class="flex items-center mb-5">
+    <svg
+      (click)="handleDisplaySpinCircle()"
+      class="cursor-pointer"
+      width="30"
+      height="22"
+      viewBox="0 0 30 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M10.5 21.1316L0.0234375 10.655L10.5 0.178467L12.6094 2.28784L5.71875 9.17847H29.9766V12.1316H5.71875L12.6094 19.0222L10.5 21.1316Z"
+        fill="white" />
+    </svg>
+    <div class="text-[20px] ml-5">
+      {{ 'parrainage.Tirage_bonus_pour_le_filleul' | translate }}
+    </div>
+  </div>
+  <hr />
+  <div class="p-10">
+    <div class="ml-auto mr-auto w-[800px] relative">
+      <button
+        id="spin"
+        class="!bg-[#2F435E] opacity-50 flex flex-col justify-center items-center"
+        (click)="startSpin()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="45"
+          height="45"
+          viewBox="0 0 45 45"
+          fill="none">
+          <path
+            d="M22.7286 5.65753L35.7838 18.7127C36.814 19.7446 37.3926 21.1431 37.3926 22.6012C37.3926 24.0593 36.814 25.4578 35.7838 26.4897C33.7781 28.4954 30.3241 28.576 28.2286 26.7005V35.5629C28.2286 38.5952 25.7609 41.0629 22.7286 41.0629C19.6963 41.0629 17.2286 38.5952 17.2286 35.5629V26.7005C15.1331 28.576 11.6791 28.4954 9.67344 26.4897C8.64324 25.4578 8.06462 24.0593 8.06462 22.6012C8.06462 21.1431 8.64324 19.7446 9.67344 18.7127L22.7286 5.65753ZM31.8953 24.4345C32.2582 24.4353 32.6132 24.3283 32.9152 24.127C33.2172 23.9257 33.4525 23.6392 33.5914 23.3039C33.7303 22.9686 33.7664 22.5995 33.6952 22.2437C33.624 21.8878 33.4487 21.5611 33.1914 21.305L22.7286 10.8422L12.2658 21.305C12.0954 21.4751 11.9602 21.6772 11.8679 21.8996C11.7757 22.122 11.7282 22.3604 11.7282 22.6012C11.7282 22.842 11.7757 23.0804 11.8679 23.3028C11.9602 23.5252 12.0954 23.7273 12.2658 23.8974C12.6143 24.2319 13.0788 24.4188 13.5619 24.4188C14.0451 24.4188 14.5095 24.2319 14.8581 23.8974L20.8953 17.8602L20.8953 35.5629C20.9164 36.0349 21.1188 36.4806 21.4603 36.8072C21.8018 37.1338 22.2561 37.316 22.7286 37.316C23.2011 37.316 23.6554 37.1338 23.9969 36.8072C24.3384 36.4806 24.5408 36.0349 24.5619 35.5629L24.5619 17.8602L30.5991 23.8974C30.7688 24.0684 30.9707 24.2039 31.1932 24.2961C31.4158 24.3883 31.6544 24.4354 31.8953 24.4345Z"
+            fill="#ECECEC" />
+        </svg>
+        {{ selectedGainNumber ? selectedGainNumber : '0' }} €
+      </button>
+      <span class="arrow"></span>
+      <div class="spinner" [style.transform]="'rotate(' + rotation + 'deg)'">
+        <div
+          [style]="getStyle(i, part.color)"
+          *ngFor="let part of parts; index as i"
+          [id]="part.text">
+          <span>{{ part.text }} </span>
+        </div>
+      </div>
+      <div class="text-[48px] text-center mt-5">
+        {{ 'parrainage.Gains' | translate }} :
+        {{ selectedGainNumber ? selectedGainNumber : '0' }} €
+      </div>
+      <div></div>
+      <div class="selected-gain"></div>
+    </div>
+  </div>
+</div>

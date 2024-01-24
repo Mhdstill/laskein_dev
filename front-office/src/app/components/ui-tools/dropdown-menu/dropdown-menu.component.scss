@@ -1,0 +1,36 @@
+.dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  transform: translate(0) scale(1);
+  visibility: visible;
+}
+
+.my-bg-white {
+  background-color: white !important;
+}
+
+.hover-bg-gray {
+  &:hover {
+    background-color: #f1f1f1 !important;
+  }
+}
+
+.fts-15 {
+  font-size: 15px !important;
+}
+
+.border-radius-20 {
+  border-radius: 20px;
+}
+
+.wid-175 {
+  width: 175px !important;
+}
+
+.z-50 {
+  z-index: 99999 !important;
+}
+
+.disabled {
+  pointer-events: none; /* Disable pointer events on the div and its children */
+  opacity: 0.5; /* Reduce opacity to indicate that it's disabled */
+}

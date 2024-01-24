@@ -1,0 +1,19 @@
+* {
+  background-color: transparent;
+}
+
+table {
+  min-height: 250px;
+}
+
+.table-content {
+  height: 309px;
+  overflow: auto;
+}
+
+button {
+  &:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+}

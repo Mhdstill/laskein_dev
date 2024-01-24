@@ -1,0 +1,145 @@
+<div class="flex pt-16 max-w-screen-xl mx-auto">
+  <div class="w-4/5 h-[1794px] custom-bg">
+    <div class="flex flex-col justify-center items-center p-5">
+      <h1 class="fs-28">
+        {{
+          'journalier.parcourez_notre_tableau_de_récompenses_journalière'
+            | translate
+        }}
+      </h1>
+      <h3 class="fs-22">
+        <!-- Des surprises toujours plus captivantes au fil des jours ! -->
+        {{
+          'journalier.des_surprises_toujours_plus_captivantes_au_fil_des_jours'
+            | translate
+        }}
+      </h3>
+    </div>
+    <div
+      class="flex flex-col justify-center items-center p-2 reclaim-offer m-5">
+      <h1 class="fs-20">
+        <!-- Réclamer vos coffres tous les jours -->
+        {{ 'journalier.réclamer_vos_coffres_tous_les_jours' | translate }}
+      </h1>
+      <div class="justify-start items-start gap-2.5 flex pt-2">
+        <!-- <div
+          class="w-[67px] flex-col justify-start items-center gap-2.5 flex pt-[2px] pr-4">
+          <div
+            class="text-center text-white text-5xl font-normal flex items-center">
+            <span *ngIf="displayJour <= 9" class="pt[2px]">0</span
+            >{{ displayJour ? displayJour : '00' }}
+          </div>
+
+          <div
+            class="text-center text-white text-sm font-medium uppercase leading-9 tracking-wider">
+            {{ 'journalier.jours' | translate }}
+          </div>
+        </div> -->
+        <!-- <div class="flex-col justify-start items-center gap-2.5 flex">
+          <div
+            class="text-center text-white text-xl font-normal leading-loose tracking-tight">
+            :
+          </div>
+        </div> -->
+        <div class="flex-col justify-start items-center gap-2.5 inline-flex">
+          <div
+            class="text-center text-white text-5xl font-normal leading-[50px]">
+            {{ displayHeures ? displayHeures : '00' }}
+          </div>
+          <div
+            class="text-center text-white text-sm font-medium uppercase leading-9 tracking-wider">
+            {{ 'journalier.heures' | translate }}
+          </div>
+        </div>
+        <div class="flex-col justify-start items-center gap-2.5 inline-flex">
+          <div
+            class="text-center text-white text-xl font-normal leading-loose tracking-tight">
+            :
+          </div>
+        </div>
+        <div class="flex-col justify-start items-center gap-2.5 inline-flex">
+          <div
+            class="text-center text-white text-5xl font-normal leading-[50px]">
+            {{ displayMins ? displayMins : '00' }}
+          </div>
+          <div
+            class="text-center text-white text-sm font-medium uppercase leading-9 tracking-wider">
+            {{ 'journalier.minutes' | translate }}
+          </div>
+        </div>
+        <div class="flex-col justify-start items-center gap-2.5 inline-flex">
+          <div
+            class="text-center text-white text-xl font-normal leading-loose tracking-tight">
+            :
+          </div>
+        </div>
+        <div class="flex-col justify-start items-center gap-2.5 inline-flex">
+          <div
+            class="text-center text-white text-5xl font-normal leading-[50px]">
+            {{ displaySeconds ? displaySeconds : '00' }}
+          </div>
+          <div
+            class="text-center text-white text-sm font-medium uppercase leading-9 tracking-wider">
+            {{ 'journalier.secondes' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="grid grid-cols-5 gap-4 bg-[#44566C] h-[1440px] overflow-auto w-full p-5"
+        [ngStyle]="getGridLayoutStyle(listUserBox.length)">
+        <div
+          class="col-span-1"
+          [ngClass]="{
+            ' !bg-[#997b52] rounded':
+              cardDailyItem.isPlayed === 'true' &&
+              cardDailyItem.isLocked === 'false',
+            '!bg-gradient-to-b rounded-[8px] from-[#2f435e] from-[41.21%] via-[#4b5e65] via-[83.79%] to-[#201b22] to-[100%]':
+               cardDailyItem.isLocked === 'false' && cardDailyItem.isPlayed === 'false',
+            ' bg-[#8D97A5] rounded': cardDailyItem.isLocked === 'true',
+          }"
+          *ngFor="let cardDailyItem of formattedCardDailyItems">
+          <div
+            [ngClass]="{
+              ' opacity-1': cardDailyItem.isLocked === 'true'
+            }"
+            class="flex flex-col px-2 p-1 gap-1 rounded-[8px] opacity- w-[200px] h-56">
+            <div>
+              <p class="text-h6 text-right normal-case">
+                J-{{ cardDailyItem.nbrJour }}
+              </p>
+              <h4 class="uppercase text-center">
+                {{ cardDailyItem.title }}
+              </h4>
+            </div>
+            <div class="flex justify-center rounded">
+              <img
+                [src]="getBoxImageURL(cardDailyItem.imageUrl ?? '')"
+                class="w-[125px] h-[104px] rounded" />
+            </div>
+            <div
+              class="w-full flex justify-center items-center flex-shrink-0 gap-2 px-4">
+              <button
+                (click)="goGame()"
+                [disabled]="
+                  cardDailyItem.isLocked === 'true' ||
+                  cardDailyItem.isPlayed === 'true'
+                "
+                class="bg-[#1976D2] w-[86px] rounded-[40px] m-3 text-sm font-medium uppercase py-1">
+                {{ 'journalier.réclamer' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-auto pl-1 h-[1794px] w-1/5">
+    <app-best-sellers
+      class="pb-r"
+      [boxList]="getBoxList()"
+      [cardBoxItem]="cardBoxItem">
+    </app-best-sellers>
+  </div>
+</div>

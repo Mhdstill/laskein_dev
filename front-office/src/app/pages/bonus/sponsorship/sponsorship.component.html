@@ -1,0 +1,133 @@
+<div class="w-full pt-16 h-full justify-start items-start gap-1 flex">
+  <div
+    class="grow shrink basis-0 mx-auto max-w-screen-xl self-stretch p-8 !bg-slate-600 flex-col justify-start items-start gap-8 flex">
+    <div
+      class="self-stretch mx-auto max-w-screen-xl justify-center items-center gap-4 flex">
+      <div
+        class="w-[689px] pr-16 py-8 flex-col justify-center items-center gap-4 flex">
+        <div
+          class="self-stretch text-center text-white text-[34px] font-normal leading-10 tracking-wide">
+          {{ 'parrainage.inviter' | translate }}
+        </div>
+      </div>
+      <img
+        src="/assets/img/game1.avif"
+        class="w-[547px] h-[335px] rounded-2xl" />
+    </div>
+    <div
+      class="self-stretch mx-auto max-w-screen-xl py-8 justify-center items-center gap-4 flex">
+      <div class="pr-6 py-1 rounded justify-start items-start gap-2 flex">
+        <div class="text-white text-[23px] font-normal leading-loose">
+          {{ 'parrainage.Lien_de_arrainage' | translate }}
+        </div>
+        <div class="self-stretch justify-start items-start flex">
+          <div
+            class="!text-[#33B063] text-[23px] font-normal underline leading-loose cursor-pointer">
+            {{ referalURL }}
+          </div>
+        </div>
+      </div>
+      <div class="px-2 rounded justify-start items-center gap-4 flex">
+        <div
+          class="self-stretch py-[11px] justify-start items-center gap-2 flex">
+          <img src="/assets/svg/copie.svg" class="cursor-pointer" />
+          <div
+            class="text-center text-white text-[14px] font-medium uppercase leading-9 tracking-widest cursor-pointer"
+            (click)="copyToClipboard(referalURL)">
+            {{
+              isReferalCopied ? 'Lien copié' : ('parrainage.Copier' | translate)
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="self-stretch h-[484px] !bg-[#2F435E] justify-center items-center flex">
+      <div
+        class="grow shrink basis-0 self-stretch py-8 border border-gray-200 flex-col justify-center items-center gap-6 flex">
+        <div class="justify-center items-center gap-2 flex">
+          <img src="/assets/img/10-kids.png" />
+        </div>
+        <div
+          class="text-center text-white text-[23px] font-normal leading-loose">
+          {{ 'parrainage.10_filleuls' | translate }}
+        </div>
+      </div>
+      <div
+        class="grow shrink basis-0 self-stretch py-8 border border-gray-200 flex-col justify-center items-center gap-6 flex">
+        <img src="/assets/img/20-kids.png" class="pt-5" />
+        <div
+          class="text-center text-white text-[23px] pt-3 font-normal leading-loose">
+          {{ 'parrainage.20_filleuls' | translate }}
+        </div>
+      </div>
+    </div>
+    <div
+      class="self-stretch mx-auto max-w-screen-xl h-[509px] flex-col justify-center items-center gap-8 flex">
+      <div class="h-36 py-8 flex-col justify-center items-center gap-4 flex">
+        <div
+          class="self-stretch text-center text-white text-[34px] font-normal leading-10 tracking-wide">
+          {{ 'parrainage.Jusqu_à_100€' | translate }}
+        </div>
+      </div>
+      <img src="/assets/img/plateforme.avif" class="w-[500px] h-[333px]" />
+    </div>
+    <div
+      class="self-stretch mx-auto max-w-screen-xl h-[104px] py-8 flex-col justify-center items-center gap-4 flex">
+      <div
+        class="self-stretch text-center text-white text-[34px] font-normal leading-10 tracking-wide">
+        {{ 'parrainage.Comment_procéder' | translate }}
+      </div>
+    </div>
+    <div
+      class="self-stretch h-[484px] !bg-slate-700 rounded-[32px] flex-col justify-center items-center flex">
+      <div
+        class="self-stretch grow shrink basis-0 py-4 !bg-[#3A577E] rounded-tl-[32px] rounded-tr-[32px] justify-center items-center gap-2 flex">
+        <div class="w-24 flex-col justify-start items-start gap-2 flex">
+          <div
+            class="self-stretch text-center text-white text-[88px] font-normal leading-10 tracking-widest">
+            1
+          </div>
+        </div>
+        <div
+          class="grow shrink basis-0 flex-col justify-start items-center gap-2 flex">
+          <div
+            class="text-center text-white text-[23px] font-normal leading-loose">
+            {{ 'parrainage.Encourager' | translate }}
+          </div>
+          <img src="/assets/svg/Vector.svg" />
+        </div>
+      </div>
+      <div
+        class="self-stretch grow shrink basis-0 py-4 !bg-[#344D6F] justify-center items-center gap-2 flex">
+        <div
+          class="w-24 text-center text-white text-[88px] font-normal leading-10 tracking-widest">
+          2
+        </div>
+        <div
+          class="grow shrink basis-0 flex-col justify-start items-center gap-2 flex">
+          <div
+            class="text-center text-white text-[23px] font-normal leading-loose">
+            {{ 'parrainage.Vos_amis' | translate }}
+          </div>
+          <img src="/assets/svg/Vector.svg" class="" />
+        </div>
+      </div>
+      <div
+        class="self-stretch grow rounded-bl-[32px] rounded-br-[32px] shrink basis-0 py-4 !bg-[#2F435E] justify-center items-center gap-6 inline-flex">
+        <div
+          class="w-24 text-center text-white text-[88px] font-normal leading-10 tracking-widest">
+          3
+        </div>
+        <div
+          class="grow shrink basis-0 text-center text-white text-[23px] font-normal">
+          {{ 'parrainage.Félicitations' | translate }}
+        </div>
+      </div>
+    </div>
+    <div
+      class="mx-auto max-w-screen-xl h-auto flex-col justify-center items-center flex">
+      <img src="/assets/img/jetonsdeCasino.avif" class="w-[600px] h-[333px]" />
+    </div>
+  </div>
+</div>

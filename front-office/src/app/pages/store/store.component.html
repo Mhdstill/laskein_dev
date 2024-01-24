@@ -1,0 +1,92 @@
+<div class="flex w-full items-center px-16 justify-center p-8 pt-24">
+  <div
+    class="flex justify-center max-w-screen-xl flex-wrap gap-8 px-8 py-4 rounded-full !bg-[#44566C]">
+    <div *ngFor="let data of dropDownDataList">
+      <app-dropdown-menu
+        [disabled]="
+          this.selectedCategoryId
+            ? !(this.selectedCategoryId === data.title.id)
+            : false
+        "
+        (emitListFromOption)="
+          updateBoxIdsFormSubCategory($event);
+          scrollToTop();
+          scrollToTopOfFilter()
+        "
+        [buttonWidth]="buttonWidth"
+        [addBorder]="true"
+        [dropdownList]="data.list"
+        [dropDownTitle]="data.title"
+        [selectMode]="true"></app-dropdown-menu>
+    </div>
+    <button
+      data-tooltip="This is a tooltip"
+      class="reset-button py-1.5 px-4 border border-white text-white rounded-full whitespace-nowrap"
+      (click)="unselectCategory()"
+      [disabled]="!selectedCategoryId">
+      Multi-category
+    </button>
+  </div>
+</div>
+<!-- <div class="flex-row flex justify-center items-center space-x-10 gap-10">
+  <div class="px-8"> -->
+<app-search-bar
+  (filterSearch)="
+    filterBoxList($event); scrollToTopOfFilter()
+  "></app-search-bar>
+<!-- </div>
+  <div class="px-8 pt-2">
+    <div class="px-8 relative">
+      <button (click)="showTooltip = !showTooltip" class="cursor-pointer">
+        <img src="/assets/svg/Button.png" class="w-10 h-10" />
+      </button>
+      <div
+        *ngIf="showTooltip"
+        class="bg-gray-200 rounded-lg flex-col justify-center items-center flex absolute w-28 h-[66px] px-4 py-4">
+        <div class="text-center !text-black text-xs font-normal">
+          Taille du box
+        </div>
+        <div class="justify-center items-end gap-3 flex pt-2">
+          <div
+            class="w-[19px] h-[23px] p-2.5 bg-slate-700 rounded-sm cursor-pointer"></div>
+          <div
+            class="w-[27px] h-[30px] p-2.5 bg-slate-700 rounded-sm cursor-pointer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="flex justify-center items-center pb-5">
+  {{ filteredListBox.length }} item(s)
+</div>
+
+<div class="flex w-full mx-auto max-w-screen-xl justify-center h-[1099px]">
+  <div
+    class="!bg-[#44566C] grid grid-cols-4 w-4/5 gap-6 p-8 mx-auto h-[1099px] overflow-y-auto relative"
+    [ngStyle]="getGridLayoutStyle(listBox.length)"
+    id="style-4"
+    #scrollableDivBoxFilter>
+    <div
+      #topContainer
+      class="flex topContainer justify-center"
+      *ngFor="let cardBoxItem of filteredListBox">
+      <a [routerLink]="['/detail-box/', cardBoxItem.id]">
+        <app-card-box [cardBoxItem]="cardBoxItem"></app-card-box>
+      </a>
+    </div>
+    <div *ngIf="filteredListBox.length == 0" class="empty-section">
+      <div>
+        <img src="assets/img/empty-data.png" class="w-1/2" />
+        {{ 'store.empty_box' | translate }}
+      </div>
+    </div>
+  </div>
+  <div class="overflow-clip w-1/5 pl-1" id="style-4">
+    <app-best-sellers
+      class="pb-r"
+      [boxList]="getBoxList()"
+      [cardBoxItem]="cardBoxItem">
+    </app-best-sellers>
+  </div>
+</div>

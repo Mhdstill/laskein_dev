@@ -1,0 +1,49 @@
+.image {
+  position: relative;
+}
+
+.image__overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  right: 0;
+  height: 100%;
+  width: 73%;
+  opacity: 0;
+  visibility: none;
+  transition: 0.5s ease;
+  background: rgba(0, 0, 0, 0.7);
+
+  @media (max-width: 1440px) {
+    height: 165px;
+    width: 145px;
+    left: 28px;
+  }
+}
+
+.image:hover .image__overlay {
+  opacity: 0.9;
+  transition: 0s ease;
+}
+
+.test {
+  background: rgba(250, 249, 249, 0.752);
+}
+
+.card__overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0px;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+
+  @media (max-width: 1440px) {
+    height: 165px;
+    width: 145px;
+    left: 28px;
+  }
+}

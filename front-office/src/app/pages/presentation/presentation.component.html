@@ -1,0 +1,164 @@
+<div class="w-full flex flex-col items-center pt-16">
+  <div class="flex-col justify-center items-center flex w-full">
+    <div
+      class="lg:flex grid md:justify-center md:flex lg:justify-center grid-cols-6 gap-1 !bg-[#44566C] w-full max-w-screen-xl p-1 px-4 justify-center items-center">
+      <app-card-provider
+        class="flex items-center justify-center"
+        *ngFor="let cardProviderItem of getCardProviderItemFormatted()"
+        [cardProviderItem]="cardProviderItem"></app-card-provider>
+      <button class="w-[116px]">
+        <!-- VOIR TOUT -->
+        {{ 'accueil.voir_tout' | translate }}
+      </button>
+    </div>
+    <div
+      class="flex lg:flex-row md:flex-col sm:flex-col gap-8 pl-2 pr-2 py-10 w-full max-w-screen-xl">
+      <div
+        class="flex flex-col justify-start items-center gap-8 lg:w-2/3 md:w-full sm:w-full">
+        <div class="flex items-end justify-center">
+          <app-carousel [images]="images" [autoSlide]="true"></app-carousel>
+        </div>
+
+        <div class="flex items-end justify-center">
+          <app-card-banner [images]="imagesBottom"></app-card-banner>
+        </div>
+      </div>
+      <div
+        class="flex lg:flex-row md:flex-col sm:flex-col lg:w-1/3 md:w-full sm:w-full justify-center">
+        <div class="flex items-center justify-center w-full h-full">
+          <div class="w-full relative flex items-center justify-center">
+            <div
+              class="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+              <div
+                class="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start">
+                <div
+                  *ngFor="let cardGrosLotItem of listGrosLotBox"
+                  class="flex flex-shrink-0 relative w-full sm:w-auto">
+                  <app-card-gros-lot
+                    [cardGrosLotItem]="cardGrosLotItem"></app-card-gros-lot>
+                  <div class="absolute w-full h-full p-6">
+                    <h2
+                      class="lg:text-3xl rounded-[20px] text-center leading-4 lg:leading-5 text-[40px] font-bold text-white">
+                      <!-- Le plus gros lot -->
+                      {{ 'accueil.le_plus_gros_lot' | translate }}
+                    </h2>
+                    <div class="flex h-full justify-center items-end pb-6">
+                      <a [routerLink]="['/detail-box/', cardGrosLotItem.id]">
+                        <button
+                          class="font-bold !bg-[#2f435e] rounded-[20px] uppercase w-[158px] flex justify-center items-center text-white text-sm h-8">
+                          {{ 'accueil.ouvrir_pour' | translate }}
+                          {{ cardGrosLotItem.prix }}
+                          <!-- Ouvrir pour -->
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="py-4 flex-col justify-start items-center !bg-[#44566C] flex w-full">
+    <div class="flex flex-col gap-4 w-full max-w-screen-xl items-center">
+      <div class="text-center !text-white text-h4 font-normal tracking-wide">
+        {{ 'accueil.box_plus_vendu' | translate }}
+      </div>
+      <div
+        class="justify-center space-x-5 gap-12 items-start w-full flex lg:flex-row md:flex-col sm:flex-col">
+        <div *ngFor="let cardBoxItem of listBestSelledBox" class="py-6">
+          <a [routerLink]="['/detail-box/', cardBoxItem.id]">
+            <app-card-box [cardBoxItem]="cardBoxItem"></app-card-box>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-full h-[312px] py-16 !bg-[#2f435e] justify-center items-center gap-6 flex">
+    <div class="flex-col justify-center items-center gap-6 flex w-full">
+      <h4
+        class="text-center text-white text-h4 font-normal leading-10 tracking-wide">
+        {{ 'accueil.abonnez_aux_newsletter' | translate }}
+      </h4>
+      <div class="pt-7 flex flex-col items-center gap-2 w-full">
+        <div
+          class="lg:w-1/3 md:w:2/3 sm:w-full h-14 px-3 py-2 rounded-[39px] border !border-white justify-center items-center gap-2 flex">
+          <form
+            [formGroup]="newsletterForm"
+            (ngSubmit)="onSubmit()"
+            class="grow justify-center items-center gap-16 flex relative">
+            <input
+              type="email"
+              formControlName="email"
+              class="outline-none text-white w-[calc(100%_-_130px)]"
+              placeholder="{{ 'accueil.saisir_adresse_email' | translate }}" />
+            <button
+              type="submit"
+              class="px-4 py-2 rounded-[32px] !bg-white !text-[#44566C] uppercase absolute right-0">
+              {{ 'accueil.s_abonner' | translate }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-col justify-center items-center p-8 !bg-[#44566C] w-full">
+    <h2 class="mb-8 text-h4 !text-white">
+      <!-- Nouveautes Blog -->{{ 'accueil.nouveautes_blog' | translate }}
+    </h2>
+    <div class="flex gap-12 lg:flex-row md:flex-col sm:flex-col">
+      <div
+        class="flex flex-col p-2 rounded w-[352px] gap-3"
+        *ngFor="let cardBlogItem of getCardItemFormatted()">
+        <app-card-blog [cardBlogItem]="cardBlogItem"></app-card-blog>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isCookiesModalShown"
+  (click)="isCookiesModalShown = false"
+  class="flex flex-col w-1/3 ml-auto mr-auto modal-bg justify-center items-center">
+  <div
+    class="py-12 modal__overlay transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+    id="modal">
+    <div
+      role="modal"
+      class="mx-auto container flex h-full items-end justify-center max-w-lg">
+      <div
+        class="!bg-[#2d486e] rounded-xl shadow fixed overflow-y-auto sm:h-auto w-10/12 md:w-8/12 lg:w-1/2 2xl:w-2/5">
+        <div
+          class="!bg-[#2d486e] rounded-tl-md rounded-tr-md px-4 md:px-8 md:py-4 pt-3 flex items-center justify-center">
+          <p class="text-h6 text-center">{{ 'WeUseCookies' | translate }}</p>
+        </div>
+        <div class="px-4 md:px-10 md:pt-12 md:pb-4 pb-7">
+          <div class="flex items-center justify-between">
+            <div>
+              <button
+                (click)="isCookiesModalShown = false"
+                class="text-h6 font-semibold focus:outline-none transition duration-150 ease-in-out hover:bg-[#034EA2] bg-[#034EA2] rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm">
+                {{ 'DeclineCookies' | translate }}
+              </button>
+            </div>
+            <div>
+              <button
+                (click)="setCookies()"
+                class="text-h6 font-semibold focus:outline-none ml-3 !bg-[#54B164] dark:bg-gray-700 dark:border-gray-700 dark:hover:bg-gray-600 transition duration-150 text-gray-600 dark:text-gray-400 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
+                {{ 'AcceptCookies' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

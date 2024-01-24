@@ -1,0 +1,11 @@
+version: '3'
+services:
+  laskein-api-staging:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME}
+    container_name: ${CONTAINER_NAME}
+    volumes:
+      - ${UPLOAD_PATH}:/app/upload
+    network_mode: host

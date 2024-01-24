@@ -1,0 +1,18 @@
+<div *ngIf="images && images.length > 0" class="carousel-container">
+  <a
+    *ngFor="let image of images; let i = index"
+    [href]="image.bannerLink"
+    rel="noopener noreferrer">
+    <img
+      [src]="getTenisImageURL(image.imageSrc)"
+      [ngClass]="{ 'image-active': selectedIndex === i }"
+      class="fade" />
+  </a>
+</div>
+<div *ngIf="indicators" class="carousel-dot-container">
+  <span
+    *ngFor="let dot of images; let i = index"
+    [ngClass]="{ active: selectedIndex === i }"
+    (click)="selectImage(i)"
+    class="dot"></span>
+</div>

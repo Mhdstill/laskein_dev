@@ -1,0 +1,17 @@
+* {
+  background-color: transparent;
+  &:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.6;
+  }
+}
+.myBtn-edit {
+  padding: 7px;
+  &:hover {
+    background-color: gray !important;
+  }
+}
+
+small {
+  color: red !important;
+}

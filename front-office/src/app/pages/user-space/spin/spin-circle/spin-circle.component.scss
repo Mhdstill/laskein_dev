@@ -1,0 +1,133 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 800px;
+  height: 800px;
+  // background-color: #ccc !important;
+  border-radius: 50%;
+  border: 15px solid transparent;
+  position: relative;
+  overflow: hidden;
+  // transition: 5s;
+  animation: spin 1.5s linear infinite;
+  animation-play-state: paused;
+}
+
+.container div {
+  height: 50%;
+  width: 200px;
+  position: absolute;
+  clip-path: polygon(100% 0, 50% 100%, 0 0);
+  transform: translateX(-50%);
+  transform-origin: bottom;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #fff;
+  left: 260px;
+}
+
+.container span {
+  position: absolute;
+  top: 30px;
+  font-size: 48px;
+}
+
+.container .one {
+  background-color: #3f51b5 !important;
+  left: 50%;
+}
+.container .two {
+  background-color: #ff9800 !important;
+  transform: rotate(45deg);
+}
+.container .three {
+  background-color: #e91e63 !important;
+  transform: rotate(90deg);
+}
+.container .four {
+  background-color: #4caf50 !important;
+  transform: rotate(135deg);
+}
+.container .five {
+  background-color: #009688 !important;
+  transform: rotate(180deg);
+}
+.container .six {
+  background-color: #795548 !important;
+  transform: rotate(225deg);
+}
+.container .seven {
+  background-color: #9c27b0 !important;
+  transform: rotate(270deg);
+}
+.container .eight {
+  background-color: #f44336 !important;
+  transform: rotate(315deg);
+}
+
+.arrow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+}
+
+#spin {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  // background-color: #e2e2e2 !important;
+  text-transform: uppercase;
+  // border:8px solid #fff;
+  font-weight: bold;
+  font-size: 20px;
+  color: #a2a2a2;
+  width: 100px;
+  height: 100px;
+  font-family: sans-serif;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 1px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+#movable {
+  width: 50px;
+  height: 50px;
+  background-color: blue;
+  position: absolute;
+}
+
+.selected-gain {
+  position: absolute;
+  width: 10px;
+  border-radius: 0px 0px 5px 5px;
+  height: 50px;
+  background: white;
+  top: 0;
+  left: 390px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start with no rotation */
+  }
+  100% {
+    transform: rotate(360deg); /* End with full rotation (360 degrees) */
+  }
+}

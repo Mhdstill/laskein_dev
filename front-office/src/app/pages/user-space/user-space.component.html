@@ -1,0 +1,34 @@
+<div class="flex w-full justify-center pt-16 max-w-screen-xl mx-auto">
+  <div class="w-4/5 !bg-[#44566C] p-8">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex mt-5">
+        <a
+          *ngFor="let menu of menuList"
+          (click)="changeTab(menu.key)"
+          [class.active]="activeTab === menu.key"
+          class="cursor-pointer border-b-2 border-transparent inline-block p-5 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+          [style]="getBgColorActiveTab(menu.key)">
+          {{ menu.value | translate }}
+        </a>
+      </nav>
+    </div>
+    <div *ngIf="activeTab === menuKeys[0]">
+      <app-my-account></app-my-account>
+    </div>
+    <div *ngIf="activeTab === menuKeys[1]">
+      <app-tracking-order></app-tracking-order>
+    </div>
+    <div *ngIf="activeTab === menuKeys[2]">
+      <app-subscription-management></app-subscription-management>
+    </div>
+    <div *ngIf="activeTab === menuKeys[3]">
+      <app-user-reward-level></app-user-reward-level>
+    </div>
+    <div *ngIf="activeTab === menuKeys[4]">
+      <app-user-referal></app-user-referal>
+    </div>
+  </div>
+  <div class="overflow-auto w-1/5 h-[1400px] pl-1" id="style-4">
+    <app-best-sellers [cardBoxItem]="cardBoxItem"> </app-best-sellers>
+  </div>
+</div>

@@ -1,0 +1,155 @@
+<div class="">
+  <div class="">
+    <div class="flex items-center justify-between px-7 py-[8px]">
+      <div class="text-h6">{{ getShortName() }}</div>
+      <div>
+        <button
+          (click)="updateUserInfo()"
+          [disabled]="this.profilForm.disabled"
+          class="rounded !bg-[#1976D2] border border-[#1976D2] hover:border-[#062d54] w-36 text-button">
+          <i class="fas fa-save"></i>
+          {{ 'profil.Enregistrer' | translate }}
+        </button>
+        <button
+          class="w-36 myBtn-edit"
+          [disabled]="!this.profilForm.disabled"
+          (click)="handleEnablingForm()">
+          <i class="fas fa-edit"></i>
+          {{ 'profil.Modifier' | translate }}
+        </button>
+      </div>
+    </div>
+    <hr class="w-[93%] mx-auto" />
+    <form class="bg-white rounded px-8 pt-4 pb-8" [formGroup]="profilForm">
+      <div class="flex justify-between w-[40%] py-3">
+        <div class="flex items-center">
+          <input
+            id="inline-checkbox"
+            [disabled]="profilForm.disabled"
+            type="checkbox"
+            [checked]="isSpecificGenderSelected(manGender)"
+            (change)="setGender(manGender)"
+            class="w-5 h-5 text-[#376F70] bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label
+            for="inline-checkbox"
+            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            {{ 'profil.Homme' | translate }}
+          </label>
+        </div>
+        <div class="flex items-center w[530px]">
+          <input
+            id="inline-2-checkbox"
+            type="checkbox"
+            [disabled]="profilForm.disabled"
+            [checked]="isSpecificGenderSelected(womanGender)"
+            (change)="setGender(womanGender)"
+            class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label
+            for="inline-2-checkbox"
+            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            {{ 'profil.Femme' | translate }}
+          </label>
+        </div>
+      </div>
+      <div class="pb-8">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label>{{ 'profil.Nom' | translate }} </label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="name"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(profilForm.controls['name'], 'name')
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-8">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label> {{ 'profil.Prénom' | translate }} </label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="surname"
+              id="surname"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(profilForm.controls['surname'], 'surname')
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-8">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label>
+            {{ 'profil.Date_de_naissance' | translate }}
+          </label>
+          <div class="relative">
+            <input
+              type="date"
+              formControlName="dateDeNaissance"
+              id="dateDeNaissance"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(
+              profilForm.controls['dateDeNaissance'],
+              'dateDeNaissance'
+            )
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-8">
+        <div class="flex flex-row justify-between items-end gap-10">
+          <label>
+            {{ 'profil.Téléphone' | translate }}
+          </label>
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="telephone"
+              id="telephone"
+              class="w-[546px] pl-6 pr-2 py-2 rounded border border-gray-400 focus:border-blue-500 focus:outline-none focus:shadow-outline" />
+          </div>
+        </div>
+        <div class="mt-1">
+          <small class="float-right">{{
+            getInputError(profilForm.controls['telephone'], 'telephone')
+          }}</small>
+        </div>
+      </div>
+      <div class="pb-4">
+        <div class="flex flex-row items-end gap-8">
+          <label>
+            {{ 'profil.Pièce_justificative' | translate }}
+          </label>
+          <div class="relative">
+            <img
+              class="cursor-pointer"
+              src="/assets/img/Button.png"
+              alt="Button"
+              (click)="redirectToShuftipro()" />
+          </div>
+          <!-- <div class="custom-file-input">
+            <img
+              src="/assets/img/Button.png"
+              alt="Button"
+              (click)="fileInput.click()" />
+            <input
+              type="file"
+              name="attachment"
+              #fileInput
+              (change)="handleFileInput($event)" />
+          </div> -->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

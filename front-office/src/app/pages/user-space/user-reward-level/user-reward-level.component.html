@@ -1,0 +1,19 @@
+<div class="!bg-[#2F435E]">
+  <div class="p-5">
+    <div class="mb-5 text-[20px]">
+      {{ 'palier.Votre_dépense_actuelle' | translate }}
+      : {{ totalExpense }} €
+    </div>
+    <hr />
+  </div>
+  <div class="p-5">
+    <div class="mb-2 mt-5">
+      {{ 'palier.Historique_de_votre_palier_de_récompense' | translate }}
+    </div>
+
+    <app-custom-table-panier
+      [columns]="tableColumns"
+      (button1Clicked)="goToGame($event)"
+      [rows]="tableRows"></app-custom-table-panier>
+  </div>
+</div>
