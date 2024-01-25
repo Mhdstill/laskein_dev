@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  front-office:
+    container_name: laskein-app-dev
+    build:
+      context: .  # Assurez-vous que ce contexte est le répertoire racine de votre projet Angular
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app  # Montez le code source dans le conteneur
+      - /app/node_modules  # Évitez de monter node_modules du système hôte
+    ports:
+      - "4200:4200"  # Mappez le port du serveur de développement

@@ -366,11 +366,7 @@
                 scope="row"
                 class="pr-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <img
-                  [src]="
-                    getBoxImageURL(
-                      data.game.article.articlePhoto[0]?.photoUrl || ''
-                    )
-                  "
+                  [src]="getBoxImageURL(data.game.article.articlePhoto[0].photoUrl || '')"
                   class="w-20 h-20" />
                 <!-- <img
                   [src]="

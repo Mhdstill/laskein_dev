@@ -1,0 +1,514 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:500,400,italic|Literata:700|Bungee+Shade:400");
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0px;
+  height: 100%;
+}
+/* a blue color as a generic focus style */
+button:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline: -webkit-focus-ring-color auto 5px !important;
+}
+a {
+  text-decoration: none;
+}
+
+.contact-page {
+    background-color: #afb3ff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .contact-page .div {
+    background-color: #afb3ff;
+    overflow: hidden;
+    width: 1440px;
+    height: 1024px;
+    position: relative;
+  }
+  
+  .contact-page .overlap {
+    position: absolute;
+    width: 1489px;
+    height: 925px;
+    top: -51px;
+    left: -25px;
+  }
+  
+  .contact-page .frame {
+    position: absolute;
+    width: 1489px;
+    height: 863px;
+    top: 0;
+    left: 0;
+    background-color: #ebefff;
+    border-radius: 174px;
+    overflow: hidden;
+  }
+  
+  .contact-page .overlap-group {
+    position: relative;
+    width: 1631px;
+    height: 868px;
+    top: -53px;
+    left: -63px;
+  }
+  
+  .contact-page .group {
+    position: absolute;
+    width: 454px;
+    height: 604px;
+    top: 264px;
+    left: 937px;
+  }
+  
+  .contact-page .overlap-group-2 {
+    position: absolute;
+    width: 448px;
+    height: 70px;
+    top: 0;
+    left: 0;
+  }
+  
+  .contact-page .rectangle {
+    position: absolute;
+    width: 446px;
+    height: 45px;
+    top: 25px;
+    left: 2px;
+    border-radius: 50px;
+    border: 1px solid;
+    border-color: #1420a0;
+  }
+  
+  .contact-page .name {
+    position: absolute;
+    width: 96px;
+    top: 0;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: transparent;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .text-wrapper {
+    color: #000000;
+  }
+  
+  .contact-page .span {
+    color: #ff0707;
+  }
+  
+  .contact-page .rectangle-2 {
+    position: absolute;
+    width: 446px;
+    height: 45px;
+    top: 110px;
+    left: 0;
+    border-radius: 50px;
+    border: 1px solid;
+    border-color: #1420a0;
+  }
+  
+  .contact-page .rectangle-3 {
+    position: absolute;
+    width: 446px;
+    height: 216px;
+    top: 297px;
+    left: 2px;
+    border-radius: 20px;
+    border: 1px solid;
+    border-color: #1420a0;
+  }
+  
+  .contact-page .frame-wrapper {
+    position: absolute;
+    width: 173px;
+    height: 38px;
+    top: 566px;
+    left: 137px;
+  }
+  
+  .contact-page .div-wrapper {
+    display: flex;
+    width: 173px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 7px 150px;
+    position: relative;
+    background-color: #147012bf;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .contact-page .text-wrapper-2 {
+    position: relative;
+    width: fit-content;
+    margin-left: -90.64px;
+    margin-right: -90.64px;
+    font-family: "Inter", Helvetica;
+    font-weight: 500;
+    color: #f9f9f9;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .e-mail {
+    position: absolute;
+    width: 83px;
+    top: 85px;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: transparent;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .text-wrapper-3 {
+    color: #ff0000;
+  }
+  
+  .contact-page .message {
+    position: absolute;
+    width: 107px;
+    top: 272px;
+    left: 0;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: transparent;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .group-2 {
+    position: absolute;
+    width: 1631px;
+    height: 448px;
+    top: 0;
+    left: 0;
+    opacity: 0.47;
+  }
+  
+  .contact-page .img {
+    position: absolute;
+    width: 343px;
+    height: 293px;
+    top: 104px;
+    left: 88px;
+    object-fit: cover;
+  }
+  
+  .contact-page .rectangle-4 {
+    position: absolute;
+    width: 327px;
+    height: 304px;
+    top: 104px;
+    left: 1201px;
+    object-fit: cover;
+  }
+  
+  .contact-page .rectangle-5 {
+    position: absolute;
+    width: 446px;
+    height: 45px;
+    top: 473px;
+    left: 939px;
+    border-radius: 50px;
+    border: 1px solid;
+    border-color: #1420a0;
+  }
+  
+  .contact-page .subject {
+    position: absolute;
+    top: 447px;
+    left: 937px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: transparent;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .text-wrapper-4 {
+    color: #fd0000;
+  }
+  
+  .contact-page .text-wrapper-5 {
+    position: absolute;
+    top: 228px;
+    left: 325px;
+    font-family: "Literata", Helvetica;
+    font-weight: 700;
+    color: #1a2493;
+    font-size: 64px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .ellipse {
+    position: absolute;
+    width: 423px;
+    height: 342px;
+    top: 581px;
+    left: 245px;
+    background-color: #0a182c;
+    border-radius: 211.5px/171px;
+  }
+  
+  .contact-page .frame-2 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 453px;
+    height: 167px;
+    align-items: flex-start;
+    gap: -87px 11px;
+    position: absolute;
+    top: 296px;
+    left: 270px;
+  }
+  
+  .contact-page .p {
+    position: relative;
+    width: 411px;
+    margin-top: -1px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    color: #191919;
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .logo-enveloppe {
+    position: absolute;
+    width: 324px;
+    height: 339px;
+    top: 586px;
+    left: 300px;
+    object-fit: cover;
+  }
+  
+  .contact-page .overlap-wrapper {
+    position: absolute;
+    width: 529px;
+    height: 204px;
+    top: 476px;
+    left: 205px;
+  }
+  
+  .contact-page .overlap-2 {
+    position: relative;
+    width: 515px;
+    height: 204px;
+  }
+  
+  .contact-page .text-wrapper-6 {
+    position: absolute;
+    width: 55px;
+    top: 79px;
+    left: 31px;
+    transform: rotate(-40.81deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .text-wrapper-7 {
+    position: absolute;
+    top: 33px;
+    left: 80px;
+    transform: rotate(-26.54deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .text-wrapper-8 {
+    position: absolute;
+    top: 8px;
+    left: 153px;
+    transform: rotate(-11.42deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .text-wrapper-9 {
+    position: absolute;
+    top: 2px;
+    left: 224px;
+    transform: rotate(3.17deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .text-wrapper-10 {
+    position: absolute;
+    top: 17px;
+    left: 300px;
+    transform: rotate(17.34deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .text-wrapper-11 {
+    position: absolute;
+    top: 41px;
+    left: 360px;
+    transform: rotate(27.49deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .text-wrapper-12 {
+    position: absolute;
+    top: 76px;
+    left: 406px;
+    transform: rotate(39.01deg);
+    font-family: "Bungee Shade", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 96px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .contact-page .element {
+    position: absolute;
+    width: 91px;
+    height: 89px;
+    top: 935px;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  .contact-page .text-wrapper-13 {
+    position: absolute;
+    width: 356px;
+    top: 928px;
+    left: 398px;
+    font-family: "Inter", Helvetica;
+    font-weight: 400;
+    font-style: italic;
+    color: #000000;
+    font-size: 32px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .contact-page .frame-3 {
+    position: absolute;
+    width: 39px;
+    height: 51px;
+    top: 923px;
+    left: 346px;
+    /* background-image: url(./img/frame-4.png); */
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  
+  .contact-page .overlap-3 {
+    position: absolute;
+    width: 336px;
+    height: 57px;
+    top: 911px;
+    left: 958px;
+  }
+  
+  .contact-page .snapchat-squared {
+    position: absolute;
+    width: 67px;
+    height: 57px;
+    top: 0;
+    left: 161px;
+  }
+  
+  .contact-page .pinterest {
+    position: absolute;
+    width: 67px;
+    height: 57px;
+    top: 0;
+    left: 214px;
+  }
+  
+  .contact-page .facebook-circled {
+    position: absolute;
+    width: 67px;
+    height: 57px;
+    top: 0;
+    left: 0;
+  }
+  
+  .contact-page .instagram {
+    position: absolute;
+    width: 67px;
+    height: 57px;
+    top: 0;
+    left: 53px;
+  }
+  
+  .contact-page .tik-tok {
+    position: absolute;
+    width: 67px;
+    height: 57px;
+    top: 0;
+    left: 269px;
+  }
+  
+  .contact-page .frame-4 {
+    position: absolute;
+    width: 57px;
+    height: 50px;
+    top: 4px;
+    left: 112px;
+   /* background-image: url(./img/frame-5.png); */
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  
